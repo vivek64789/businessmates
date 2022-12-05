@@ -1,4 +1,4 @@
-import 'package:business_mates/screens/register_screen.dart';
+import 'package:business_mates/screens/authentication/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:smartkit/SmartkitScreen/Screen/SmartKitHome.dart';
@@ -151,7 +151,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => const BMRegisterScreen(),
+                builder: (BuildContext context) => const LoginScreen(),
               ),
             );
           }

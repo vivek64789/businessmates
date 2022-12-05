@@ -16,7 +16,7 @@ class BMButton extends StatelessWidget {
         horizontal: Constants.buttonPaddingHorizontal,
       ),
       child: ElevatedButton(
-        onPressed: () => onPressed,
+        onPressed: () => onPressed(),
         style: ElevatedButton.styleFrom(
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
           backgroundColor: Theme.of(context).colorScheme.primary,

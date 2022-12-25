@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "68614719530",
+    "firebase_url": "https://arduinoproject1-10e0b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "arduinoproject1-10e0b",
+    "storage_bucket": "arduinoproject1-10e0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68614719530:android:9f08b724f3fc0457781b53",
+        "android_client_info": {
+          "package_name": "com.example.business_mates"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68614719530-n0j62cdrphkfh9f35vjdgtpo8q6ejj4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrIB80kVJwNojDRU9rq4zP_GOFFXV6M_w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68614719530-n0j62cdrphkfh9f35vjdgtpo8q6ejj4q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "68614719530-1va4i9dcek7iq31ebqft36hjfmgssf7n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.businessmatesAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68614719530:android:4f369af6bde6e5b7781b53",
+        "android_client_info": {
+          "package_name": "com.example.businessmates_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68614719530-n0j62cdrphkfh9f35vjdgtpo8q6ejj4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrIB80kVJwNojDRU9rq4zP_GOFFXV6M_w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68614719530-n0j62cdrphkfh9f35vjdgtpo8q6ejj4q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "68614719530-1va4i9dcek7iq31ebqft36hjfmgssf7n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.businessmatesAdmin"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

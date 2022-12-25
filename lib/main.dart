@@ -1,12 +1,12 @@
-import 'package:business_mates/design/light_theme.dart';
-import 'package:business_mates/screens/authentication/register_screen.dart';
-import 'package:business_mates/screens/authentication/verify_otp_screen.dart';
-import 'package:business_mates/screens/authentication/login_screen.dart';
-import 'package:business_mates/screens/homepage/course_info_screen.dart';
+import 'package:business_mates/core/design/light_theme.dart';
+import 'package:business_mates/presentation/screens/authentication/register_screen.dart';
+import 'package:business_mates/presentation/screens/authentication/verify_otp_screen.dart';
+import 'package:business_mates/presentation/screens/authentication/login_screen.dart';
+import 'package:business_mates/presentation/screens/homepage/course_info_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/homepage/home.dart';
-import 'screens/introduction_animation/introduction_animation_screen.dart';
+import 'presentation/screens/homepage/home.dart';
+import 'presentation/screens/introduction_animation/introduction_animation_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

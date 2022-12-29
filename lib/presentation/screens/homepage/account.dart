@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:business_mates/presentation/widgets/custom_image.dart';
-import 'package:business_mates/presentation/widgets/setting_item.dart';
+import '../../widgets/custom_image.dart';
+import '../../widgets/setting_item.dart';
 
 import '../../../core/theme/color.dart';
 import '../../../core/utils/data.dart';

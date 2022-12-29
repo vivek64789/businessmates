@@ -2,6 +2,7 @@ class Constants {
   static const String appName = "Flutter Demo";
   static const String appVersion = "1.0.0";
   static const String appBuildNumber = "1";
+  static const int ANIMATED_BODY_MS = 500;
 
 // button
   static const double buttonHeight = 50.0;
@@ -34,4 +35,7 @@ class Constants {
   static const double formFieldMaxWidth = 200.0;
   static const double formFieldMaxHeight = 100.0;
   static const double formFieldBetweenSpacing = 10.0;
+
+  static const placeholderImage =
+      "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png";
 }

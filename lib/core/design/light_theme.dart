@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import './colors.dart';
+import 'colors.dart';
 
 ThemeData lightTheme() {
   return ThemeData(
@@ -9,6 +9,7 @@ ThemeData lightTheme() {
     textTheme: textTheme(),
     colorScheme: colorScheme(),
     appBarTheme: appBarTheme(),
+    snackBarTheme: snackBarTheme(),
   );
 }
 
@@ -20,12 +21,25 @@ AppBarTheme appBarTheme() {
     actionsIconTheme: const IconThemeData(
       color: Color.fromRGBO(158, 158, 158, 1),
     ),
+    foregroundColor: colorPrimary500,
     titleTextStyle: TextStyle(
       fontSize: 16,
       fontFamily: GoogleFonts.poppins().fontFamily,
       fontWeight: FontWeight.w600,
       color: const Color.fromRGBO(158, 158, 158, 1),
     ),
+  );
+}
+
+SnackBarThemeData snackBarTheme() {
+  return const SnackBarThemeData(
+    backgroundColor: colorPrimary500,
+    contentTextStyle: TextStyle(
+      color: Colors.white,
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+    ),
+    actionTextColor: Colors.white,
   );
 }
 

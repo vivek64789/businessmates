@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './colors.dart';
+import 'colors.dart';
 
 BoxShadow extraLargeShadow = BoxShadow(
   color: Colors.black.withOpacity(0.75),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:business_mates/presentation/widgets/custom_image.dart';
+import 'custom_image.dart';
 
 import '../../core/theme/color.dart';
 

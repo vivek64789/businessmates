@@ -1,4 +1,4 @@
-import 'package:business_mates/presentation/screens/authentication/login_screen.dart';
+import 'authentication/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:smartkit/SmartkitScreen/Screen/SmartKitHome.dart';

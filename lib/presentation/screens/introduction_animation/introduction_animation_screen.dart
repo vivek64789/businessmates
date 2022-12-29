@@ -1,5 +1,8 @@
-import 'package:business_mates/presentation/screens/authentication/login_screen.dart';
+import 'package:auto_route/auto_route.dart';
+import '../../cubits/auth/auth_cubit.dart';
+import '../authentication/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'components/care_view.dart';
 import 'components/center_next_button.dart';
@@ -11,6 +14,9 @@ import 'components/welcome_view.dart';
 
 class IntroductionAnimationScreen extends StatefulWidget {
   const IntroductionAnimationScreen({Key? key}) : super(key: key);
+  static const String routeName = '/introduction-animation-screen';
+  static Page page() =>
+      const MaterialPage<void>(child: IntroductionAnimationScreen());
 
   @override
   _IntroductionAnimationScreenState createState() =>
@@ -113,7 +119,8 @@ class _IntroductionAnimationScreenState
     }
   }
 
-  void _signUpClick() {
-    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+  void _signUpClick() async {
+    context.read<AuthCubit>().setIsAppFirstTime(false);
+    context.router.replaceNamed(RegisterScreen.routeName);
   }
 }

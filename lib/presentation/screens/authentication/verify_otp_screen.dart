@@ -1,18 +1,22 @@
-import 'package:business_mates/presentation/screens/authentication/register_screen.dart';
-import 'package:business_mates/presentation/screens/homepage/home.dart';
-import 'package:business_mates/presentation/widgets/bm_button.dart';
-import 'package:business_mates/presentation/widgets/filled_otp_rounded_widget.dart';
+import 'package:auto_route/auto_route.dart';
+import '../../cubits/auth/auth_cubit.dart';
+import 'register_screen.dart';
+import '../../widgets/bm_button.dart';
+import '../../../routes.gr.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils/constants.dart';
-
 
 class VerifyOTPScreen extends StatelessWidget {
   static const routeName = '/verify-otp-screen';
   const VerifyOTPScreen({super.key});
 
+  static Page page() => const MaterialPage<void>(child: VerifyOTPScreen());
+
   @override
   Widget build(BuildContext context) {
+    final AuthCubit authCubit = context.read<AuthCubit>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -32,7 +36,7 @@ class VerifyOTPScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Text(
-                    'Verify your OTP',
+                    'Verify your Email Address',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
@@ -43,7 +47,7 @@ class VerifyOTPScreen extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    'Enter the OTP sent to your email',
+                    'Check your mail box and verify',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
@@ -59,9 +63,7 @@ class VerifyOTPScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed(
-                  RegisterScreen.routeName,
-                );
+                context.router.pushNamed(RegisterScreen.routeName);
               },
               child: Text(
                 'Click here to Change Email Address',
@@ -79,29 +81,97 @@ class VerifyOTPScreen extends StatelessWidget {
             Container(
               margin: const EdgeInsets.symmetric(
                   horizontal: Constants.formFieldMarginHorizontal),
-              child: FilledRoundedPinPut(
-                onComplete: () {},
+              child: Column(
+                children: const [
+                  // email has been sent to your email please check
+                  Text(
+                    'Email has been sent to your email please check and verify',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
+            // Container(
+            //   margin: const EdgeInsets.symmetric(
+            //       horizontal: Constants.formFieldMarginHorizontal),
+            //   child: FilledRoundedPinPut(
+            //     onComplete: () {},
+            //   ),
+            // ),
 
             const SizedBox(
               height: 50,
             ),
-            BMButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(
-                    HomePage.routeName,
-                  );
-                },
-                text: "Verify"),
+            BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                return BMButton(
+                    isLoading: state.isInProgress,
+                    onPressed: () async {
+                      final user =
+                          await context.read<AuthCubit>().getCurrentUser();
+
+                      if (user!.emailVerified) {
+                        context.router
+                            .push(RootDashboardRoute(currentIndex: 0));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text(
+                              'Please Verify Your Email Address',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
+                          ),
+                        );
+                      }
+                    },
+                    text: "Check Verification");
+              },
+            ),
+            // resend otp
+            const SizedBox(
+              height: 20,
+            ),
+            BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                return BMButton(
+                    color: Colors.red,
+                    onPressed: () {
+                      context.read<AuthCubit>().signOut();
+                      context.router.replaceAll([const LoginScreenRoute()]);
+                    },
+                    text: "Logout");
+              },
+            ),
             // resend otp
             const SizedBox(
               height: 20,
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                authCubit.sendEmailVerification();
+                // show message
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text(
+                      'Verification Email Re Sent',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                  ),
+                );
+              },
               child: Text(
-                'Resend OTP',
+                'Resend Verification Email',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 12,

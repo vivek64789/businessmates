@@ -1,6 +1,7 @@
-import 'package:business_mates/core/theme/color.dart';
+import 'package:business_mates/data/models/course_categories_model.dart';
+
+import '../../core/theme/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CategoryBox extends StatelessWidget {
   const CategoryBox(
@@ -10,7 +11,7 @@ class CategoryBox extends StatelessWidget {
       this.onTap,
       this.selectedColor = actionColor})
       : super(key: key);
-  final data;
+  final CategoriesModel data;
   final Color selectedColor;
   final bool isSelected;
   final GestureTapCallback? onTap;
@@ -21,12 +22,15 @@ class CategoryBox extends StatelessWidget {
       onTap: onTap,
       child: Column(
         children: [
-          AnimatedContainer(
+          ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: AnimatedContainer(
+              width: MediaQuery.of(context).size.width * 0.13,
+              height: MediaQuery.of(context).size.width * 0.13,
               duration: const Duration(milliseconds: 500),
               curve: Curves.fastOutSlowIn,
-              padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                  color: isSelected ? red : Colors.white,
+                  color: Colors.white,
                   boxShadow: [
                     BoxShadow(
                       color: shadowColor.withOpacity(0.1),
@@ -36,17 +40,17 @@ class CategoryBox extends StatelessWidget {
                     ),
                   ],
                   shape: BoxShape.circle),
-              child: SvgPicture.asset(
-                data["icon"],
-                color: isSelected ? selectedColor : textColor,
-                width: 30,
-                height: 30,
-              )),
+              child: Image.network(
+                data.imageUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
           const SizedBox(
             height: 10,
           ),
           Text(
-            data["name"],
+            data.name,
             maxLines: 1,
             overflow: TextOverflow.fade,
             style:

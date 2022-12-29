@@ -1,3 +1,5 @@
+import 'package:business_mates/core/utils/course_utils.dart';
+import 'package:business_mates/data/models/course/course_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/theme/color.dart';
@@ -11,7 +13,7 @@ class FeatureItem extends StatelessWidget {
       this.height = 290,
       this.onTap})
       : super(key: key);
-  final data;
+  final CourseModel data;
   final double width;
   final double height;
   final GestureTapCallback? onTap;
@@ -40,37 +42,37 @@ class FeatureItem extends StatelessWidget {
         child: Stack(
           children: [
             CustomImage(
-              data["image"],
+              data.imageUrl,
               width: double.infinity,
               height: 190,
               radius: 15,
             ),
+            // Positioned(
+            //   top: 170,
+            //   right: 15,
+            //   child: Container(
+            //     padding: const EdgeInsets.all(10),
+            //     decoration: BoxDecoration(
+            //       color: primary,
+            //       borderRadius: BorderRadius.circular(20),
+            //       boxShadow: [
+            //         BoxShadow(
+            //           color: shadowColor.withOpacity(0.05),
+            //           spreadRadius: 1,
+            //           blurRadius: 1,
+            //           offset: const Offset(0, 0),
+            //         ),
+            //       ],
+            //     ),
+            //     child: Text(
+            //       data["price"],
+            //       style: const TextStyle(
+            //           color: Colors.white, fontWeight: FontWeight.w500),
+            //     ),
+            //   ),
+            // ),
             Positioned(
-              top: 170,
-              right: 15,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: primary,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: shadowColor.withOpacity(0.05),
-                      spreadRadius: 1,
-                      blurRadius: 1,
-                      offset: const Offset(0, 0),
-                    ),
-                  ],
-                ),
-                child: Text(
-                  data["price"],
-                  style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w500),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 210,
+              top: 200,
               child: Container(
                 width: width - 20,
                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -78,7 +80,7 @@ class FeatureItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      data["name"],
+                      data.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -93,16 +95,22 @@ class FeatureItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         getAttribute(Icons.play_circle_outlined, labelColor,
-                            data["session"]),
+                            "${data.sections?.length} sections"),
                         const SizedBox(
                           width: 12,
                         ),
-                        getAttribute(Icons.schedule_rounded, labelColor,
-                            data["duration"]),
+                        getAttribute(
+                            Icons.schedule_rounded,
+                            labelColor,
+                            CourseUtils.getNumberOfMinutesOfCourses(data) /
+                                        60 >=
+                                    1.0
+                                ? "${CourseUtils.getNumberOfMinutesOfCourses(data)} hours"
+                                : "${CourseUtils.getNumberOfMinutesOfCourses(data)} minutes"),
                         const SizedBox(
                           width: 12,
                         ),
-                        getAttribute(Icons.star, yellow, data["review"]),
+                        // getAttribute(Icons.star, yellow, data["review"]),
                       ],
                     ),
                   ],

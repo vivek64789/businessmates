@@ -1,23 +1,23 @@
-import 'package:business_mates/presentation/screens/homepage/course_info_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:business_mates/presentation/widgets/category_box.dart';
-import 'package:business_mates/presentation/widgets/feature_item.dart';
-import 'package:business_mates/presentation/widgets/notification_box.dart';
-import 'package:business_mates/presentation/widgets/recommend_item.dart';
+import '../../widgets/category_box.dart';
+import '../../widgets/feature_item.dart';
+import '../../widgets/notification_box.dart';
+import '../../widgets/recommend_item.dart';
 
 import '../../../core/theme/color.dart';
 import '../../../core/utils/data.dart';
+import 'course_info_screen.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-  static const String routeName = '/homepage';
+class MyCourseScreen extends StatefulWidget {
+  const MyCourseScreen({Key? key}) : super(key: key);
+  static const String routeName = '/MyCourseScreen';
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _MyCourseScreenState createState() => _MyCourseScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MyCourseScreenState extends State<MyCourseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

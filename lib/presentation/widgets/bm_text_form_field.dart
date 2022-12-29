@@ -6,6 +6,10 @@ import '../../core/design/colors.dart';
 class BMTextFormField extends StatefulWidget {
   final TextInputType? keyboardType;
   final TextCapitalization? textCapitalization;
+  final Color? errorColor;
+  final Function? onEditingComplete;
+  final Function? onSaved;
+
   final String? hintText;
   final String? labelText;
   final String? errorText;
@@ -50,7 +54,10 @@ class BMTextFormField extends StatefulWidget {
       this.suffixIcon,
       this.obscureText = false,
       this.suffix,
-      this.inputFormatters
+      this.inputFormatters,
+      this.errorColor,
+      this.onEditingComplete,
+      this.onSaved
       // this.suffixHeight,
       // this.suffixWidth
       })
@@ -103,6 +110,7 @@ class _BMTextFormFieldState extends State<BMTextFormField> {
     return Opacity(
       opacity: widget.enabled ? 1 : 0.4,
       child: TextFormField(
+          onEditingComplete: widget.onEditingComplete as void Function()?,
           inputFormatters: widget.inputFormatters,
           textAlignVertical: TextAlignVertical.center,
           obscureText: widget.obscureText!,
@@ -115,6 +123,7 @@ class _BMTextFormFieldState extends State<BMTextFormField> {
           initialValue: widget.initialValue,
           controller: widget.controller,
           onChanged: widget.onChanged,
+          onSaved: widget.onSaved as void Function(String?)?,
           style: TextStyle(
               color: colorbackgroundSecondary300,
               fontSize: fontSize,
@@ -144,7 +153,7 @@ class _BMTextFormFieldState extends State<BMTextFormField> {
             isDense: true,
             contentPadding: padding,
             errorMaxLines: 2,
-            errorStyle: const TextStyle(color: colorError500),
+            errorStyle: TextStyle(color: widget.errorColor ?? colorError500),
             focusedErrorBorder:
                 _buildOutlineBorder(borderRadius, colorError500),
             errorBorder: _buildOutlineBorder(borderRadius, colorError500),

@@ -5,22 +5,37 @@ import '../../core/utils/constants.dart';
 class BMButton extends StatelessWidget {
   final Function onPressed;
   final String text;
-  const BMButton({Key? key, required this.onPressed, required this.text})
-      : super(key: key);
+  final bool isLoading;
+  final Color? color;
+  final Color? foregroundColor;
+  final bool outlined;
+
+  const BMButton({
+    Key? key,
+    required this.onPressed,
+    required this.text,
+    this.isLoading = false,
+    this.color,
+    this.foregroundColor,
+    this.outlined = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
       width: double.infinity,
       height: Constants.buttonHeight,
       margin: const EdgeInsets.symmetric(
         horizontal: Constants.buttonPaddingHorizontal,
       ),
       child: ElevatedButton(
-        onPressed: () => onPressed(),
+        onPressed: isLoading ? null : () => onPressed(),
         style: ElevatedButton.styleFrom(
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          disabledBackgroundColor: Theme.of(context).colorScheme.secondary,
+          foregroundColor:
+              foregroundColor ?? Theme.of(context).colorScheme.onPrimary,
+          backgroundColor: color ?? Theme.of(context).colorScheme.primary,
           elevation: Constants.buttonElevation,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
@@ -28,7 +43,11 @@ class BMButton extends StatelessWidget {
             ),
           ),
         ),
-        child: Text(text),
+        child: isLoading
+            ? CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.onPrimary,
+              )
+            : Text(text),
       ),
     );
   }

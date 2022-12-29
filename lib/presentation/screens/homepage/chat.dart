@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:business_mates/presentation/widgets/chat_item.dart';
-import 'package:business_mates/presentation/widgets/custom_textfield.dart';
+import '../../widgets/chat_item.dart';
+import '../../widgets/custom_textfield.dart';
 
 import '../../../core/utils/data.dart';
 

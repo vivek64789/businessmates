@@ -1,9 +1,9 @@
+import '../../../core/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:business_mates/presentation/widgets/bottombar_item.dart';
+import '../../widgets/bottombar_item.dart';
 import '../../../core/theme/color.dart';
-import '../../../core/utils/constant.dart';
 import 'account.dart';
-import 'home.dart';
+import 'home_screen.dart';
 
 class RootApp extends StatefulWidget {
   const RootApp({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
     {
       "icon": "assets/icons/home.svg",
       "active_icon": "assets/icons/home.svg",
-      "page": const HomePage(),
+      "page": HomePage(),
     },
     {
       "icon": "assets/icons/search.svg",
@@ -44,7 +44,7 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
 
 //====== set animation=====
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(milliseconds: ANIMATED_BODY_MS),
+    duration: const Duration(milliseconds: Constants.ANIMATED_BODY_MS),
     vsync: this,
   );
   late final Animation<double> _animation = CurvedAnimation(

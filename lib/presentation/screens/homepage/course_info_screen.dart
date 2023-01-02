@@ -1,8 +1,18 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:business_mates/core/utils/course_utils.dart';
+import 'package:business_mates/data/models/course/course_model.dart';
+import 'package:business_mates/data/models/course/course_section_model.dart';
+import 'package:business_mates/presentation/screens/homepage/widgets/show_course_section_and_lesson_widget.dart';
+import 'package:business_mates/routes.gr.dart';
 import 'package:flutter/material.dart';
 import 'design_course_app_theme.dart';
 
 class CourseInfoScreen extends StatefulWidget {
   static const routeName = '/course-info';
+  final CourseModel course;
+
+  const CourseInfoScreen({Key? key, required this.course}) : super(key: key);
+
   @override
   _CourseInfoScreenState createState() => _CourseInfoScreenState();
 }
@@ -58,7 +68,7 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
                 AspectRatio(
                   aspectRatio: 1.2,
                   child: Image.network(
-                    "https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+                    widget.course.imageUrl,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -95,14 +105,14 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
                               ? tempHeight
                               : infoHeight),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 32.0, left: 18, right: 16),
                             child: Text(
-                              'Web Design\nCourse',
+                              widget.course.name,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
@@ -113,169 +123,206 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 16, right: 16, bottom: 8, top: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  '\$28.99',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 22,
-                                    letterSpacing: 0.27,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
-                                ),
-                                Container(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text(
-                                        '4.3',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w200,
-                                          fontSize: 22,
-                                          letterSpacing: 0.27,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onBackground,
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                        size: 24,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+
                           AnimatedOpacity(
                             duration: const Duration(milliseconds: 500),
                             opacity: opacity1,
                             child: Padding(
                               padding: const EdgeInsets.all(8),
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: <Widget>[
-                                  getTimeBoxUI('24', 'Classe'),
-                                  getTimeBoxUI('2hours', 'Time'),
-                                  getTimeBoxUI('24', 'Seat'),
+                                  getTimeBoxUI(
+                                      widget.course.sections!.length.toString(),
+                                      'Section'),
+                                  getTimeBoxUI(
+                                      CourseUtils.getNumberOfLessons(
+                                              widget.course)
+                                          .toString(),
+                                      'Lesson'),
+                                  getTimeBoxUI(
+                                      CourseUtils.getNumberOfMinutesOfCourses(
+                                              widget.course)
+                                          .toString(),
+                                      'Minutes'),
                                 ],
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity2,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16, right: 16, top: 8, bottom: 8),
-                                child: Text(
-                                  'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 14,
-                                    letterSpacing: 0.27,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onBackground,
-                                  ),
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
+                          AnimatedOpacity(
+                            duration: const Duration(milliseconds: 500),
+                            opacity: opacity2,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.05),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10.0),
                                 ),
+                              ),
+                              padding: const EdgeInsets.only(
+                                  left: 16, right: 16, top: 8, bottom: 8),
+                              child: Text(
+                                widget.course.description,
+                                textAlign: TextAlign.justify,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
+
+                          // course contents title
+                          AnimatedOpacity(
+                            duration: const Duration(milliseconds: 500),
+                            opacity: opacity3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 16, right: 16, top: 8, bottom: 8),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Course Contents",
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18,
+                                      letterSpacing: 0.27,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground,
+                                    ),
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      context.router.push(
+                                        ViewCourseContentScreenRoute(
+                                          sections: widget.course.sections!,
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      "View All",
+                                      textAlign: TextAlign.justify,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                        letterSpacing: 0.27,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          Expanded(
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 500),
+                              opacity: opacity3,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: widget.course.sections!.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final int count =
+                                      widget.course.sections!.length;
+                                  final Animation<double> animation =
+                                      Tween<double>(begin: 0.0, end: 1.0)
+                                          .animate(CurvedAnimation(
+                                              parent: animationController!,
+                                              curve: Interval(
+                                                  (1 / count) * index, 1.0,
+                                                  curve:
+                                                      Curves.fastOutSlowIn)));
+                                  animationController?.forward();
+                                  return _buildPanel(
+                                    section: widget.course.sections![index],
+                                    index: index,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          // design expandable design to show all sections and lessons
+
                           AnimatedOpacity(
                             duration: const Duration(milliseconds: 500),
                             opacity: opacity3,
                             child: Padding(
                               padding: const EdgeInsets.only(
                                   left: 16, bottom: 16, right: 16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 48,
-                                    height: 48,
-                                    child: Container(
-                                      decoration: BoxDecoration(
+                              child: Container(
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(16.0),
+                                  ),
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .background,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(16.0),
+                                            .primary
+                                            .withOpacity(0.5),
+                                        offset: const Offset(1.1, 1.1),
+                                        blurRadius: 10.0),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: TextButton(
+                                    onPressed: () {
+                                      // add this course in learning list
+
+                                      // on success navigate to course content screen
+
+                                      context.router.push(
+                                        ReadCourseContentScreenRoute(
+                                          course: widget.course,
                                         ),
-                                        border: Border.all(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onBackground
-                                                .withOpacity(0.2)),
-                                      ),
-                                      child: Icon(
-                                        Icons.add,
+                                      );
+                                    },
+                                    child: Text(
+                                      "Start Course",
+                                      textAlign: TextAlign.justify,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 18,
+                                        letterSpacing: 0.27,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .primary,
-                                        size: 28,
+                                            .onPrimary,
                                       ),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      height: 48,
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(16.0),
-                                        ),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                                  .withOpacity(0.5),
-                                              offset: const Offset(1.1, 1.1),
-                                              blurRadius: 10.0),
-                                        ],
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'Join Course',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18,
-                                            letterSpacing: 0.0,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .background,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                                ),
                               ),
                             ),
                           ),
+
                           SizedBox(
                             height: MediaQuery.of(context).padding.bottom,
                           )
@@ -339,17 +386,24 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
     );
   }
 
+  Widget _buildPanel(
+      {required CourseSectionModel section, required int index}) {
+    return ShowCourseSectionAndLessonWidget(
+      section: section,
+      index: index,
+    );
+  }
+
   Widget getTimeBoxUI(String text1, String txt2) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.background,
-          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           boxShadow: <BoxShadow>[
             BoxShadow(
-                color:
-                    Theme.of(context).colorScheme.onBackground.withOpacity(0.2),
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
                 offset: const Offset(1.1, 1.1),
                 blurRadius: 8.0),
           ],

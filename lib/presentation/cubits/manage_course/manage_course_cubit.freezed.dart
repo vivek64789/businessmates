@@ -23,6 +23,7 @@ mixin _$ManageCourseState {
       throw _privateConstructorUsedError;
   List<CourseModel> get courses => throw _privateConstructorUsedError;
   CourseModel get courseModel => throw _privateConstructorUsedError;
+  CourseModel get selectedFeaturedCourse => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ManageCourseStateCopyWith<ManageCourseState> get copyWith =>
@@ -40,9 +41,11 @@ abstract class $ManageCourseStateCopyWith<$Res> {
       Option<ManageCourseFailure> failureMessageOption,
       LoadingStatus manageCoursesLoadingStatus,
       List<CourseModel> courses,
-      CourseModel courseModel});
+      CourseModel courseModel,
+      CourseModel selectedFeaturedCourse});
 
   $CourseModelCopyWith<$Res> get courseModel;
+  $CourseModelCopyWith<$Res> get selectedFeaturedCourse;
 }
 
 /// @nodoc
@@ -63,6 +66,7 @@ class _$ManageCourseStateCopyWithImpl<$Res, $Val extends ManageCourseState>
     Object? manageCoursesLoadingStatus = null,
     Object? courses = null,
     Object? courseModel = null,
+    Object? selectedFeaturedCourse = null,
   }) {
     return _then(_value.copyWith(
       isInProgress: null == isInProgress
@@ -85,6 +89,10 @@ class _$ManageCourseStateCopyWithImpl<$Res, $Val extends ManageCourseState>
           ? _value.courseModel
           : courseModel // ignore: cast_nullable_to_non_nullable
               as CourseModel,
+      selectedFeaturedCourse: null == selectedFeaturedCourse
+          ? _value.selectedFeaturedCourse
+          : selectedFeaturedCourse // ignore: cast_nullable_to_non_nullable
+              as CourseModel,
     ) as $Val);
   }
 
@@ -93,6 +101,14 @@ class _$ManageCourseStateCopyWithImpl<$Res, $Val extends ManageCourseState>
   $CourseModelCopyWith<$Res> get courseModel {
     return $CourseModelCopyWith<$Res>(_value.courseModel, (value) {
       return _then(_value.copyWith(courseModel: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CourseModelCopyWith<$Res> get selectedFeaturedCourse {
+    return $CourseModelCopyWith<$Res>(_value.selectedFeaturedCourse, (value) {
+      return _then(_value.copyWith(selectedFeaturedCourse: value) as $Val);
     });
   }
 }
@@ -110,10 +126,13 @@ abstract class _$$_ManageCourseStateCopyWith<$Res>
       Option<ManageCourseFailure> failureMessageOption,
       LoadingStatus manageCoursesLoadingStatus,
       List<CourseModel> courses,
-      CourseModel courseModel});
+      CourseModel courseModel,
+      CourseModel selectedFeaturedCourse});
 
   @override
   $CourseModelCopyWith<$Res> get courseModel;
+  @override
+  $CourseModelCopyWith<$Res> get selectedFeaturedCourse;
 }
 
 /// @nodoc
@@ -132,6 +151,7 @@ class __$$_ManageCourseStateCopyWithImpl<$Res>
     Object? manageCoursesLoadingStatus = null,
     Object? courses = null,
     Object? courseModel = null,
+    Object? selectedFeaturedCourse = null,
   }) {
     return _then(_$_ManageCourseState(
       isInProgress: null == isInProgress
@@ -154,6 +174,10 @@ class __$$_ManageCourseStateCopyWithImpl<$Res>
           ? _value.courseModel
           : courseModel // ignore: cast_nullable_to_non_nullable
               as CourseModel,
+      selectedFeaturedCourse: null == selectedFeaturedCourse
+          ? _value.selectedFeaturedCourse
+          : selectedFeaturedCourse // ignore: cast_nullable_to_non_nullable
+              as CourseModel,
     ));
   }
 }
@@ -166,7 +190,8 @@ class _$_ManageCourseState implements _ManageCourseState {
       required this.failureMessageOption,
       required this.manageCoursesLoadingStatus,
       required final List<CourseModel> courses,
-      required this.courseModel})
+      required this.courseModel,
+      required this.selectedFeaturedCourse})
       : _courses = courses;
 
   @override
@@ -185,10 +210,12 @@ class _$_ManageCourseState implements _ManageCourseState {
 
   @override
   final CourseModel courseModel;
+  @override
+  final CourseModel selectedFeaturedCourse;
 
   @override
   String toString() {
-    return 'ManageCourseState(isInProgress: $isInProgress, failureMessageOption: $failureMessageOption, manageCoursesLoadingStatus: $manageCoursesLoadingStatus, courses: $courses, courseModel: $courseModel)';
+    return 'ManageCourseState(isInProgress: $isInProgress, failureMessageOption: $failureMessageOption, manageCoursesLoadingStatus: $manageCoursesLoadingStatus, courses: $courses, courseModel: $courseModel, selectedFeaturedCourse: $selectedFeaturedCourse)';
   }
 
   @override
@@ -206,7 +233,9 @@ class _$_ManageCourseState implements _ManageCourseState {
                     manageCoursesLoadingStatus) &&
             const DeepCollectionEquality().equals(other._courses, _courses) &&
             (identical(other.courseModel, courseModel) ||
-                other.courseModel == courseModel));
+                other.courseModel == courseModel) &&
+            (identical(other.selectedFeaturedCourse, selectedFeaturedCourse) ||
+                other.selectedFeaturedCourse == selectedFeaturedCourse));
   }
 
   @override
@@ -216,7 +245,8 @@ class _$_ManageCourseState implements _ManageCourseState {
       failureMessageOption,
       manageCoursesLoadingStatus,
       const DeepCollectionEquality().hash(_courses),
-      courseModel);
+      courseModel,
+      selectedFeaturedCourse);
 
   @JsonKey(ignore: true)
   @override
@@ -228,11 +258,13 @@ class _$_ManageCourseState implements _ManageCourseState {
 
 abstract class _ManageCourseState implements ManageCourseState {
   const factory _ManageCourseState(
-      {required final bool isInProgress,
-      required final Option<ManageCourseFailure> failureMessageOption,
-      required final LoadingStatus manageCoursesLoadingStatus,
-      required final List<CourseModel> courses,
-      required final CourseModel courseModel}) = _$_ManageCourseState;
+          {required final bool isInProgress,
+          required final Option<ManageCourseFailure> failureMessageOption,
+          required final LoadingStatus manageCoursesLoadingStatus,
+          required final List<CourseModel> courses,
+          required final CourseModel courseModel,
+          required final CourseModel selectedFeaturedCourse}) =
+      _$_ManageCourseState;
 
   @override
   bool get isInProgress;
@@ -244,6 +276,8 @@ abstract class _ManageCourseState implements ManageCourseState {
   List<CourseModel> get courses;
   @override
   CourseModel get courseModel;
+  @override
+  CourseModel get selectedFeaturedCourse;
   @override
   @JsonKey(ignore: true)
   _$$_ManageCourseStateCopyWith<_$_ManageCourseState> get copyWith =>

@@ -4,7 +4,6 @@ import 'package:business_mates/data/models/course/course_model.dart';
 import 'package:business_mates/data/models/course_categories_model.dart';
 import 'package:business_mates/presentation/cubits/manage_categories/manage_categories_cubit.dart';
 import 'package:business_mates/presentation/cubits/manage_course/manage_course_cubit.dart';
-import 'package:business_mates/presentation/screens/homepage/course_info_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:business_mates/presentation/widgets/category_box.dart';
@@ -15,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/theme/color.dart';
 import '../../../core/utils/data.dart';
+import '../../../routes.gr.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -191,7 +191,14 @@ class _HomePageState extends State<HomePage> {
                   snapshot.data!.length,
                   (index) => FeatureItem(
                     onTap: () {
-                      context.router.pushNamed(CourseInfoScreen.routeName);
+                      // context
+                      //     .read<ManageCourseCubit>()
+                      //     .setSelectedFeaturedCourse(
+                      //       courseModel: snapshot.data![index],
+                      //     );
+                      context.router.push(CourseInfoScreenRoute(
+                        course: snapshot.data![index],
+                      ));
                     },
                     data: snapshot.data![index],
                   ),

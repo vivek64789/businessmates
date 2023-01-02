@@ -37,4 +37,11 @@ class ManageCourseCubit extends Cubit<ManageCourseState> {
   Stream<List<CourseModel>> streamAllCourses() async* {
     yield* _repository.streamAllCourses();
   }
+
+  // void setSelectedFeaturedCourse({required CourseModel courseModel}) {
+  //   emit(state.copyWith(
+  //     selectedFeaturedCourse: courseModel,
+  //     manageCoursesLoadingStatus: LoadingStatus.initial,
+  //   ));
+  // }
 }

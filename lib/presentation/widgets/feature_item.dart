@@ -1,4 +1,3 @@
-import 'package:business_mates/core/utils/course_utils.dart';
 import 'package:business_mates/data/models/course/course_model.dart';
 import 'package:flutter/material.dart';
 
@@ -99,17 +98,11 @@ class FeatureItem extends StatelessWidget {
                         const SizedBox(
                           width: 12,
                         ),
-                        getAttribute(
-                            Icons.schedule_rounded,
-                            labelColor,
-                            CourseUtils.getNumberOfMinutesOfCourses(data) /
-                                        60 >=
-                                    1.0
-                                ? "${CourseUtils.getNumberOfMinutesOfCourses(data)} hours"
-                                : "${CourseUtils.getNumberOfMinutesOfCourses(data)} minutes"),
-                        const SizedBox(
-                          width: 12,
-                        ),
+                        // getAttribute(Icons.schedule_rounded, labelColor,
+                        //     "${CourseUtils.getNumberOfMinutesOfCourses(data)} minutes"),
+                        // const SizedBox(
+                        //   width: 12,
+                        // ),
                         // getAttribute(Icons.star, yellow, data["review"]),
                       ],
                     ),

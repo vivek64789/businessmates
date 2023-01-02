@@ -7,7 +7,9 @@ class ManageCourseState with _$ManageCourseState {
     required Option<ManageCourseFailure> failureMessageOption,
     required LoadingStatus manageCoursesLoadingStatus,
     required List<CourseModel> courses,
+    
     required CourseModel courseModel,
+    required CourseModel selectedFeaturedCourse,
   }) = _ManageCourseState;
 
   factory ManageCourseState.empty() => ManageCourseState(
@@ -16,5 +18,6 @@ class ManageCourseState with _$ManageCourseState {
         manageCoursesLoadingStatus: LoadingStatus.initial,
         courses: [],
         courseModel: CourseModel.empty(),
+        selectedFeaturedCourse: CourseModel.empty(),
       );
 }

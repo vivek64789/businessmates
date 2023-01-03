@@ -38,6 +38,8 @@ mixin _$CourseLessonModel {
   String get courseId => throw _privateConstructorUsedError;
   @JsonKey(name: "category_id")
   String get categoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: "document_url")
+  String get documentUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -62,7 +64,8 @@ abstract class $CourseLessonModelCopyWith<$Res> {
       @JsonKey(name: "is_locked") bool isLocked,
       @JsonKey(name: "section_id") String sectionId,
       @JsonKey(name: "course_id") String courseId,
-      @JsonKey(name: "category_id") String categoryId});
+      @JsonKey(name: "category_id") String categoryId,
+      @JsonKey(name: "document_url") String documentUrl});
 }
 
 /// @nodoc
@@ -89,6 +92,7 @@ class _$CourseLessonModelCopyWithImpl<$Res, $Val extends CourseLessonModel>
     Object? sectionId = null,
     Object? courseId = null,
     Object? categoryId = null,
+    Object? documentUrl = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -135,6 +139,10 @@ class _$CourseLessonModelCopyWithImpl<$Res, $Val extends CourseLessonModel>
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
+      documentUrl: null == documentUrl
+          ? _value.documentUrl
+          : documentUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -158,7 +166,8 @@ abstract class _$$_CourseLessonModelCopyWith<$Res>
       @JsonKey(name: "is_locked") bool isLocked,
       @JsonKey(name: "section_id") String sectionId,
       @JsonKey(name: "course_id") String courseId,
-      @JsonKey(name: "category_id") String categoryId});
+      @JsonKey(name: "category_id") String categoryId,
+      @JsonKey(name: "document_url") String documentUrl});
 }
 
 /// @nodoc
@@ -183,6 +192,7 @@ class __$$_CourseLessonModelCopyWithImpl<$Res>
     Object? sectionId = null,
     Object? courseId = null,
     Object? categoryId = null,
+    Object? documentUrl = null,
   }) {
     return _then(_$_CourseLessonModel(
       id: null == id
@@ -229,6 +239,10 @@ class __$$_CourseLessonModelCopyWithImpl<$Res>
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
+      documentUrl: null == documentUrl
+          ? _value.documentUrl
+          : documentUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -247,7 +261,8 @@ class _$_CourseLessonModel extends _CourseLessonModel {
       @JsonKey(name: "is_locked") required this.isLocked,
       @JsonKey(name: "section_id") required this.sectionId,
       @JsonKey(name: "course_id") required this.courseId,
-      @JsonKey(name: "category_id") required this.categoryId})
+      @JsonKey(name: "category_id") required this.categoryId,
+      @JsonKey(name: "document_url") required this.documentUrl})
       : super._();
 
   factory _$_CourseLessonModel.fromJson(Map<String, dynamic> json) =>
@@ -282,10 +297,13 @@ class _$_CourseLessonModel extends _CourseLessonModel {
   @override
   @JsonKey(name: "category_id")
   final String categoryId;
+  @override
+  @JsonKey(name: "document_url")
+  final String documentUrl;
 
   @override
   String toString() {
-    return 'CourseLessonModel(id: $id, name: $name, description: $description, shortDescription: $shortDescription, videoUrl: $videoUrl, imageUrl: $imageUrl, duration: $duration, isLocked: $isLocked, sectionId: $sectionId, courseId: $courseId, categoryId: $categoryId)';
+    return 'CourseLessonModel(id: $id, name: $name, description: $description, shortDescription: $shortDescription, videoUrl: $videoUrl, imageUrl: $imageUrl, duration: $duration, isLocked: $isLocked, sectionId: $sectionId, courseId: $courseId, categoryId: $categoryId, documentUrl: $documentUrl)';
   }
 
   @override
@@ -312,7 +330,9 @@ class _$_CourseLessonModel extends _CourseLessonModel {
             (identical(other.courseId, courseId) ||
                 other.courseId == courseId) &&
             (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId));
+                other.categoryId == categoryId) &&
+            (identical(other.documentUrl, documentUrl) ||
+                other.documentUrl == documentUrl));
   }
 
   @JsonKey(ignore: true)
@@ -329,7 +349,8 @@ class _$_CourseLessonModel extends _CourseLessonModel {
       isLocked,
       sectionId,
       courseId,
-      categoryId);
+      categoryId,
+      documentUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -365,7 +386,9 @@ abstract class _CourseLessonModel extends CourseLessonModel {
       @JsonKey(name: "course_id")
           required final String courseId,
       @JsonKey(name: "category_id")
-          required final String categoryId}) = _$_CourseLessonModel;
+          required final String categoryId,
+      @JsonKey(name: "document_url")
+          required final String documentUrl}) = _$_CourseLessonModel;
   const _CourseLessonModel._() : super._();
 
   factory _CourseLessonModel.fromJson(Map<String, dynamic> json) =
@@ -400,6 +423,9 @@ abstract class _CourseLessonModel extends CourseLessonModel {
   @override
   @JsonKey(name: "category_id")
   String get categoryId;
+  @override
+  @JsonKey(name: "document_url")
+  String get documentUrl;
   @override
   @JsonKey(ignore: true)
   _$$_CourseLessonModelCopyWith<_$_CourseLessonModel> get copyWith =>

@@ -12,6 +12,7 @@ import 'package:business_mates/presentation/screens/introduction_animation/intro
 import 'package:business_mates/presentation/screens/root_dashboard.dart';
 import 'package:business_mates/presentation/screens/splash_screen.dart';
 
+import 'presentation/screens/course/pdf_viewer_screen.dart';
 import 'presentation/screens/homepage/course_info_screen.dart';
 
 @MaterialAutoRouter(
@@ -71,6 +72,11 @@ import 'presentation/screens/homepage/course_info_screen.dart';
       page: ReadCourseContentScreen,
       name: "ReadCourseContentScreenRoute",
       path: ReadCourseContentScreen.routeName,
+    ),
+    AutoRoute(
+      page: PdfViewerScreen,
+      name: "PdfViewerScreenRoute",
+      path: PdfViewerScreen.routeName,
     ),
     AutoRoute(page: SplashScreen, initial: true),
   ],

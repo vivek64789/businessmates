@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:business_mates/core/design/app_icons.dart';
 import 'package:business_mates/data/models/course/course_lesson_model.dart';
 import 'package:business_mates/data/models/course/course_model.dart';
 import 'package:business_mates/data/models/course/course_section_model.dart';
 import 'package:business_mates/presentation/screens/course/widgets/course_content_navigation_widget.dart';
+import 'package:business_mates/routes.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -166,52 +168,76 @@ class _ReadCourseContentScreenState extends State<ReadCourseContentScreen>
               );
             }
 
-            return Container(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // show if image avaialble
-                  if (lesson.imageUrl.isNotEmpty)
-                    Image.network(
-                      lesson.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
-                  const SizedBox(height: 16),
-                  // show pdf if available
-                  // if (lesson.pdfUrl.isNotEmpty)
-                  //   Container(
-                  //     height: 200,
-                  //     color: Colors.grey,
-                  //   ),
-
-                  // show the description
-                  if (lesson.videoUrl.isNotEmpty)
-                    YoutubePlayerBuilder(
-                      player: YoutubePlayer(
-                        controller: _playerController,
-                        showVideoProgressIndicator: true,
-                        progressIndicatorColor:
-                            Theme.of(context).colorScheme.primary,
-                        progressColors: const ProgressBarColors(
-                          backgroundColor: Colors.grey,
-                          playedColor: Colors.red,
-                          handleColor: Colors.blue,
-                          bufferedColor: Colors.white,
+            return SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // show if image avaialble
+                    if (lesson.imageUrl.isNotEmpty)
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        width: MediaQuery.of(context).size.width,
+                        child: Image.network(
+                          lesson.imageUrl,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      builder: (context, player) {
-                        return Column(
-                          children: [player],
+                    const SizedBox(height: 16),
+                    // show pdf if available
+                    // if (lesson.pdfUrl.isNotEmpty)
+                    //   Container(
+                    //     height: 200,
+                    //     color: Colors.grey,
+                    //   ),
+
+                    // show the description
+                    if (lesson.videoUrl.isNotEmpty)
+                      YoutubePlayerBuilder(
+                        player: YoutubePlayer(
+                          controller: _playerController,
+                          showVideoProgressIndicator: true,
+                          progressIndicatorColor:
+                              Theme.of(context).colorScheme.primary,
+                          progressColors: const ProgressBarColors(
+                            backgroundColor: Colors.grey,
+                            playedColor: Colors.red,
+                            handleColor: Colors.blue,
+                            bufferedColor: Colors.white,
+                          ),
+                        ),
+                        builder: (context, player) {
+                          return Column(
+                            children: [player],
+                          );
+                        },
+                      ),
+
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.router.push(
+                          PdfViewerScreenRoute(
+                            url: lesson.documentUrl,
+                            label: lesson.name,
+                          ),
                         );
                       },
+                      child: const Text("Download PDF"),
+                    ),
+                    const SizedBox(
+                      height: 16,
                     ),
 
-                  Text(
-                    lesson.description,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ],
+                    Text(
+                      lesson.description,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
               ),
             );
           },

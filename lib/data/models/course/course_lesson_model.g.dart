@@ -19,6 +19,7 @@ _$_CourseLessonModel _$$_CourseLessonModelFromJson(Map<String, dynamic> json) =>
       sectionId: json['section_id'] as String,
       courseId: json['course_id'] as String,
       categoryId: json['category_id'] as String,
+      documentUrl: json['document_url'] as String,
     );
 
 Map<String, dynamic> _$$_CourseLessonModelToJson(
@@ -35,4 +36,5 @@ Map<String, dynamic> _$$_CourseLessonModelToJson(
       'section_id': instance.sectionId,
       'course_id': instance.courseId,
       'category_id': instance.categoryId,
+      'document_url': instance.documentUrl,
     };

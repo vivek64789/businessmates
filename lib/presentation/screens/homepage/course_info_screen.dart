@@ -2,9 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:business_mates/core/utils/course_utils.dart';
 import 'package:business_mates/data/models/course/course_model.dart';
 import 'package:business_mates/data/models/course/course_section_model.dart';
+import 'package:business_mates/presentation/cubits/auth/auth_cubit.dart';
+import 'package:business_mates/presentation/cubits/manage_course/manage_course_cubit.dart';
 import 'package:business_mates/presentation/screens/homepage/widgets/show_course_section_and_lesson_widget.dart';
 import 'package:business_mates/routes.gr.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../cubits/manage_categories/manage_categories_cubit.dart';
 import 'design_course_app_theme.dart';
 
 class CourseInfoScreen extends StatefulWidget {
@@ -25,14 +29,17 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
   double opacity1 = 0.0;
   double opacity2 = 0.0;
   double opacity3 = 0.0;
+  String userId = '';
   @override
   void initState() {
+    userId = context.read<AuthCubit>().state.currentLoggedInUser!.uid;
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: animationController!,
         curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
     setData();
+    context.read<ManageCourseCubit>().getEnrolledCourses(userId: userId);
     super.initState();
   }
 
@@ -50,6 +57,18 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
     setState(() {
       opacity3 = 1.0;
     });
+  }
+
+  bool checkIfUserIsEnrolledInThisCourse(
+      {required List<CourseModel> enrolledCourses}) {
+    bool isEnrolled = false;
+    for (var course in enrolledCourses) {
+      if (course.id == widget.course.id) {
+        isEnrolled = true;
+        break;
+      }
+    }
+    return isEnrolled;
   }
 
   @override
@@ -291,32 +310,111 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
                                   ],
                                 ),
                                 child: Center(
-                                  child: TextButton(
-                                    onPressed: () {
-                                      // add this course in learning list
-
-                                      // on success navigate to course content screen
-
-                                      context.router.push(
-                                        ReadCourseContentScreenRoute(
-                                          course: widget.course,
-                                        ),
+                                  child: BlocConsumer<ManageCourseCubit,
+                                      ManageCourseState>(
+                                    listener: (context, state) {
+                                      if (state.enrollCourseLoadingStatus ==
+                                          LoadingStatus.loaded) {
+                                        context.router.push(
+                                          ReadCourseContentScreenRoute(
+                                            course: widget.course,
+                                          ),
+                                        );
+                                      }
+                                      state.failureMessageOption.fold(
+                                        () => {},
+                                        (failure) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                failure.when(
+                                                  serverError: (e) =>
+                                                      e.toString(),
+                                                  noInternetConnection: (e) =>
+                                                      e.toString(),
+                                                  tooManyRequests: (e) =>
+                                                      e.toString(),
+                                                  deviceNotSupported: (e) =>
+                                                      e.toString(),
+                                                  alreadyExists: (e) =>
+                                                      e.toString(),
+                                                  notFound: (e) => e.toString(),
+                                                  unableToCreate: (e) =>
+                                                      e.toString(),
+                                                  unableToDelete: (e) =>
+                                                      e.toString(),
+                                                  unableToGet: (e) =>
+                                                      e.toString(),
+                                                  unableToGetAll: (e) =>
+                                                      e.toString(),
+                                                  unableToUpdate: (e) =>
+                                                      e.toString(),
+                                                  unexpectedError: (e) =>
+                                                      e.toString(),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       );
                                     },
-                                    child: Text(
-                                      "Start Course",
-                                      textAlign: TextAlign.justify,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 18,
-                                        letterSpacing: 0.27,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
-                                      ),
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                    builder: (context, state) =>
+                                        checkIfUserIsEnrolledInThisCourse(
+                                                enrolledCourses:
+                                                    state.userEnrolledCourses)
+                                            ? TextButton(
+                                                onPressed: () {
+                                                  context.router.push(
+                                                    ReadCourseContentScreenRoute(
+                                                      course: widget.course,
+                                                    ),
+                                                  );
+                                                },
+                                                child: Text(
+                                                  "Start Reading",
+                                                  textAlign: TextAlign.justify,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 18,
+                                                    letterSpacing: 0.27,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onPrimary,
+                                                  ),
+                                                  maxLines: 3,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              )
+                                            : TextButton(
+                                                onPressed: () {
+                                                  // add this course in enrolled course
+                                                  context
+                                                      .read<ManageCourseCubit>()
+                                                      .enrollCourse(
+                                                        course: widget.course,
+                                                        userId: userId,
+                                                      );
+
+                                                  // on success navigate to course content screen
+                                                },
+                                                child: Text(
+                                                  "Enroll in Course",
+                                                  textAlign: TextAlign.justify,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 18,
+                                                    letterSpacing: 0.27,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onPrimary,
+                                                  ),
+                                                  maxLines: 3,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
                                   ),
                                 ),
                               ),

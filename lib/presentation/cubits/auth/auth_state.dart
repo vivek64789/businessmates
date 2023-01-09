@@ -1,6 +1,5 @@
 part of 'auth_cubit.dart';
 
-
 @freezed
 class AuthState with _$AuthState {
   const factory AuthState({
@@ -17,6 +16,7 @@ class AuthState with _$AuthState {
     required LoadingStatus loginLoadingStatus,
     required LoadingStatus registerLoadingStatus,
     required LoadingStatus verifyOTPLoadingStatus,
+    required UserProfileModel userProfileModel,
   }) = _AuthState;
 
   factory AuthState.empty() => AuthState(
@@ -33,5 +33,6 @@ class AuthState with _$AuthState {
         loginLoadingStatus: LoadingStatus.initial,
         registerLoadingStatus: LoadingStatus.initial,
         verifyOTPLoadingStatus: LoadingStatus.initial,
+        userProfileModel: UserProfileModel.empty(),
       );
 }

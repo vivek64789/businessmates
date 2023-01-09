@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../../core/errors/manage_course_failure.dart';
 import '../../core/errors/manage_profile_failure.dart';
 import '../../data/models/course/course_model.dart';
 import 'package:dartz/dartz.dart';
@@ -49,6 +50,9 @@ abstract class Repository {
   Future<Either<ManageCategoriesFailure, List<CategoriesModel>>>
       getAllCourseCategories();
 
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllCoursesOfCategory({required String categoryId});
+
   // courses
   Stream<List<CourseModel>> streamAllCourseOfCategories(
       {required String categoryId});
@@ -73,6 +77,24 @@ abstract class Repository {
   // stream all Lessons
   Stream<List<CourseLessonModel>> streamAllLessonOfSection(
       {required CourseSectionModel courseSectionModel});
+
+  Future<Either<ManageCourseFailure, Unit>> enrollCourse(
+      {required CourseModel course, required String userId});
+
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getEnrolledCourses(
+      {required String userId});
+
+  // all courses
+
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getAllCourses();
+
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllFeaturedCourses();
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getAllFreeCourses();
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getAllNewCourses();
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getAllPopularCourses();
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllTrendingCourses();
 
   Repository();
 }

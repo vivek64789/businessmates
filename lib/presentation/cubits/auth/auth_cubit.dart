@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:business_mates/data/models/user_profile_model.dart';
+
 import '../../../core/utils/injectable_module.dart';
 import '../../../di/injector.dart';
 import '../../../domain/repositories/repository.dart';
@@ -75,7 +77,11 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<User?> getCurrentUser() async {
     emit(state.copyWith(isInProgress: true));
-    await firebaseAuth.currentUser?.reload();
+    try {
+      await firebaseAuth.currentUser?.reload();
+    } catch (e) {
+      print(e);
+    }
     emit(state.copyWith(isInProgress: false));
     return firebaseAuth.currentUser;
   }
@@ -179,7 +185,16 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   // get user profile
+
   Future<void> getUserProfile({required String uid}) async {
-    await _repository.getUserProfile(uid: uid);
+    final failureOrProfile = await _repository.getUserProfile(uid: uid);
+    failureOrProfile.fold(
+      (l) => emit(state.copyWith()),
+      (r) => emit(
+        state.copyWith(
+          userProfileModel: r,
+        ),
+      ),
+    );
   }
 }

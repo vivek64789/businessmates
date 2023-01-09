@@ -1,3 +1,6 @@
+import 'package:business_mates/presentation/cubits/manage_profile/manage_profile_cubit.dart';
+import 'package:business_mates/presentation/screens/payments/payment_screen.dart';
+
 import 'authentication/login_screen.dart';
 import 'authentication/verify_otp_screen.dart';
 import 'introduction_animation/introduction_animation_screen.dart';
@@ -20,6 +23,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     context.read<AuthCubit>().checkIsAppFirstTime();
+    context.read<AuthCubit>().getCurrentUser();
+    if (context.read<AuthCubit>().state.currentLoggedInUser != null) {
+      context.read<AuthCubit>().getUserProfile(
+          uid: context.read<AuthCubit>().state.currentLoggedInUser!.uid);
+      context.read<ManageProfileCubit>().getUserProfile(
+          uid: context.read<AuthCubit>().state.currentLoggedInUser!.uid);
+    }
+
     super.initState();
   }
 
@@ -43,13 +54,18 @@ class _SplashScreenState extends State<SplashScreen> {
           return [IntroductionAnimationScreen.page()];
         } else if (authState.currentLoggedInUser == null) {
           return [LoginScreen.page()];
+        } else if (authState.currentLoggedInUser!.uid.isNotEmpty &&
+            !authState.currentLoggedInUser!.emailVerified) {
+          return [VerifyOTPScreen.page()];
+        } else if (authState.currentLoggedInUser != null &&
+            authState.currentLoggedInUser!.uid.isNotEmpty &&
+            authState.currentLoggedInUser!.emailVerified &&
+            authState.userProfileModel.isSubscribed == false) {
+          return [PaymentScreen.page()];
         } else if (authState.currentLoggedInUser != null &&
             authState.currentLoggedInUser!.uid.isNotEmpty &&
             authState.currentLoggedInUser!.emailVerified) {
           return [RootDashboard.page()];
-        } else if (authState.currentLoggedInUser!.uid.isNotEmpty &&
-            !authState.currentLoggedInUser!.emailVerified) {
-          return [VerifyOTPScreen.page()];
         } else {
           return [LoginScreen.page()];
         }

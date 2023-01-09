@@ -18,6 +18,7 @@ _$_UserProfileModel _$$_UserProfileModelFromJson(Map<String, dynamic> json) =>
       city: json['city'] as String,
       state: json['state'] as String,
       country: json['country'] as String,
+      isSubscribed: json['is_subscribed'] as bool,
     );
 
 Map<String, dynamic> _$$_UserProfileModelToJson(_$_UserProfileModel instance) =>
@@ -32,4 +33,5 @@ Map<String, dynamic> _$$_UserProfileModelToJson(_$_UserProfileModel instance) =>
       'city': instance.city,
       'state': instance.state,
       'country': instance.country,
+      'is_subscribed': instance.isSubscribed,
     };

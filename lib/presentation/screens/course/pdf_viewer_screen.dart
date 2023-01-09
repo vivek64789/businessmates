@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -177,6 +178,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
   }
 
   Future<bool> saveFile(String url, String fileName) async {
+    bool isDownloaded = false;
     try {
       if (await _hasAcceptedPermissions()) {
         Directory? directory;
@@ -202,29 +204,32 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
           await directory.create(recursive: true);
         }
         if (await directory.exists()) {
-          // print(url);
-          // await Dio().download(
-          //   url,
-          //   saveFile.path,
-          //   onReceiveProgress: (rec, total) {
-          //     print("Rec: $rec , Total: $total");
-          //   },
-          // );
-          // print(saveFile.path);
-          // final taskId = await FlutterDownloader.enqueue(
-          //   url: url,
-          //   headers: {}, // optional: header send with url (auth token etc)
-          //   savedDir: directory.path,
-          //   showNotification:
-          //       true, // show download progress in status bar (for Android)
-          //   openFileFromNotification:
-          //       true, // click on notification to open downloaded file (for Android)
-          // );
+          print(url);
+          await Dio().download(
+            url,
+            saveFile.path,
+            onReceiveProgress: (rec, total) {
+              print("Rec: $rec , Total: $total");
+            },
+          );
+          print(saveFile.path);
+          final taskId = await FlutterDownloader.enqueue(
+            url: url,
+            headers: {}, // optional: header send with url (auth token etc)
+            savedDir: directory.path,
+            showNotification:
+                true, // show download progress in status bar (for Android)
+            openFileFromNotification:
+                true, // click on notification to open downloaded file (for Android)
+          );
 
           _download(url, directory.path);
         }
+      } else {
+        final value = await _requestPermission(Permission.storage);
+        print("Her $value");
       }
-      return true;
+      return isDownloaded;
     } catch (e) {
       print(e);
       return false;
@@ -233,18 +238,18 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(urlPDFPath);
     if (loaded) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(label),
+          leading: Container(),
+          title: const Text("PDF Content"),
           actions: [
             IconButton(
               onPressed: () async {
-                print("this is file path $url");
+                print("this is file url $url");
                 final result = await saveFile(url, label);
-                // Dio().downloadUri(Uri.parse(urlPDFPath),
-                //     '/storage/emulated/0/Download/$label.pdf');
+                Dio().downloadUri(
+                    Uri.parse(url), '/storage/emulated/0/Download/$label.pdf');
                 if (result) {
                   // ignore: use_build_context_synchronously
                   ScaffoldMessenger.of(context).showSnackBar(

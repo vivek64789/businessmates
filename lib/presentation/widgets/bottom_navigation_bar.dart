@@ -71,15 +71,15 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         selectedIconTheme: const IconThemeData(size: 30),
         items: const [
           BottomNavigationBarItem(
-              activeIcon: Icon(BMIcon.bookmark_filled),
+              activeIcon: Icon(BMIcon.home),
               tooltip: "Home",
               icon: Icon(BMIcon.bookmark),
+              label: 'Home'),
+          BottomNavigationBarItem(
+              activeIcon: Icon(BMIcon.bookmark_filled),
+              tooltip: "My Courses",
+              icon: Icon(BMIcon.bookmark),
               label: 'My Courses'),
-          // BottomNavigationBarItem(
-          //     activeIcon: Icon(BMIcon.bookmark_filled),
-          //     tooltip: "My Courses",
-          //     icon: Icon(BMIcon.bookmark),
-          //     label: 'My Courses'),
           BottomNavigationBarItem(
             activeIcon: Icon(BMIcon.user_filled),
             tooltip: "Profile",

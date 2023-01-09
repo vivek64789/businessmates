@@ -31,6 +31,8 @@ mixin _$UserProfileModel {
   String get city => throw _privateConstructorUsedError;
   String get state => throw _privateConstructorUsedError;
   String get country => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_subscribed')
+  bool get isSubscribed => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -54,7 +56,8 @@ abstract class $UserProfileModelCopyWith<$Res> {
       String address,
       String city,
       String state,
-      String country});
+      String country,
+      @JsonKey(name: 'is_subscribed') bool isSubscribed});
 }
 
 /// @nodoc
@@ -80,6 +83,7 @@ class _$UserProfileModelCopyWithImpl<$Res, $Val extends UserProfileModel>
     Object? city = null,
     Object? state = null,
     Object? country = null,
+    Object? isSubscribed = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -122,6 +126,10 @@ class _$UserProfileModelCopyWithImpl<$Res, $Val extends UserProfileModel>
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String,
+      isSubscribed: null == isSubscribed
+          ? _value.isSubscribed
+          : isSubscribed // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -144,7 +152,8 @@ abstract class _$$_UserProfileModelCopyWith<$Res>
       String address,
       String city,
       String state,
-      String country});
+      String country,
+      @JsonKey(name: 'is_subscribed') bool isSubscribed});
 }
 
 /// @nodoc
@@ -168,6 +177,7 @@ class __$$_UserProfileModelCopyWithImpl<$Res>
     Object? city = null,
     Object? state = null,
     Object? country = null,
+    Object? isSubscribed = null,
   }) {
     return _then(_$_UserProfileModel(
       uid: null == uid
@@ -210,6 +220,10 @@ class __$$_UserProfileModelCopyWithImpl<$Res>
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String,
+      isSubscribed: null == isSubscribed
+          ? _value.isSubscribed
+          : isSubscribed // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -227,7 +241,8 @@ class _$_UserProfileModel extends _UserProfileModel {
       required this.address,
       required this.city,
       required this.state,
-      required this.country})
+      required this.country,
+      @JsonKey(name: 'is_subscribed') required this.isSubscribed})
       : super._();
 
   factory _$_UserProfileModel.fromJson(Map<String, dynamic> json) =>
@@ -254,10 +269,13 @@ class _$_UserProfileModel extends _UserProfileModel {
   final String state;
   @override
   final String country;
+  @override
+  @JsonKey(name: 'is_subscribed')
+  final bool isSubscribed;
 
   @override
   String toString() {
-    return 'UserProfileModel(uid: $uid, imageUrl: $imageUrl, role: $role, email: $email, name: $name, phone: $phone, address: $address, city: $city, state: $state, country: $country)';
+    return 'UserProfileModel(uid: $uid, imageUrl: $imageUrl, role: $role, email: $email, name: $name, phone: $phone, address: $address, city: $city, state: $state, country: $country, isSubscribed: $isSubscribed)';
   }
 
   @override
@@ -275,13 +293,15 @@ class _$_UserProfileModel extends _UserProfileModel {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.state, state) || other.state == state) &&
-            (identical(other.country, country) || other.country == country));
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.isSubscribed, isSubscribed) ||
+                other.isSubscribed == isSubscribed));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, uid, imageUrl, role, email, name,
-      phone, address, city, state, country);
+      phone, address, city, state, country, isSubscribed);
 
   @JsonKey(ignore: true)
   @override
@@ -299,16 +319,18 @@ class _$_UserProfileModel extends _UserProfileModel {
 
 abstract class _UserProfileModel extends UserProfileModel {
   const factory _UserProfileModel(
-      {required final String uid,
-      @JsonKey(name: 'image_url') required final String imageUrl,
-      required final String role,
-      required final String email,
-      required final String name,
-      required final String phone,
-      required final String address,
-      required final String city,
-      required final String state,
-      required final String country}) = _$_UserProfileModel;
+          {required final String uid,
+          @JsonKey(name: 'image_url') required final String imageUrl,
+          required final String role,
+          required final String email,
+          required final String name,
+          required final String phone,
+          required final String address,
+          required final String city,
+          required final String state,
+          required final String country,
+          @JsonKey(name: 'is_subscribed') required final bool isSubscribed}) =
+      _$_UserProfileModel;
   const _UserProfileModel._() : super._();
 
   factory _UserProfileModel.fromJson(Map<String, dynamic> json) =
@@ -335,6 +357,9 @@ abstract class _UserProfileModel extends UserProfileModel {
   String get state;
   @override
   String get country;
+  @override
+  @JsonKey(name: 'is_subscribed')
+  bool get isSubscribed;
   @override
   @JsonKey(ignore: true)
   _$$_UserProfileModelCopyWith<_$_UserProfileModel> get copyWith =>

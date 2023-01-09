@@ -1,10 +1,9 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:business_mates/core/design/app_icons.dart';
 import 'package:business_mates/data/models/course/course_lesson_model.dart';
 import 'package:business_mates/data/models/course/course_model.dart';
 import 'package:business_mates/data/models/course/course_section_model.dart';
+import 'package:business_mates/presentation/screens/course/pdf_viewer_screen.dart';
 import 'package:business_mates/presentation/screens/course/widgets/course_content_navigation_widget.dart';
-import 'package:business_mates/routes.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -175,22 +174,6 @@ class _ReadCourseContentScreenState extends State<ReadCourseContentScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // show if image avaialble
-                    if (lesson.imageUrl.isNotEmpty)
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        width: MediaQuery.of(context).size.width,
-                        child: Image.network(
-                          lesson.imageUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    const SizedBox(height: 16),
-                    // show pdf if available
-                    // if (lesson.pdfUrl.isNotEmpty)
-                    //   Container(
-                    //     height: 200,
-                    //     color: Colors.grey,
-                    //   ),
 
                     // show the description
                     if (lesson.videoUrl.isNotEmpty)
@@ -217,25 +200,52 @@ class _ReadCourseContentScreenState extends State<ReadCourseContentScreen>
                     const SizedBox(
                       height: 16,
                     ),
-                    TextButton(
-                      onPressed: () {
-                        context.router.push(
-                          PdfViewerScreenRoute(
-                            url: lesson.documentUrl,
-                            label: lesson.name,
-                          ),
-                        );
-                      },
-                      child: const Text("Download PDF"),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      child: PdfViewerScreen(
+                          url: lesson.documentUrl, label: lesson.name),
                     ),
+                    // lesson.documentUrl.isNotEmpty
+                    //     ? TextButton(
+                    //         onPressed: () {
+                    //           print("url: ${lesson.documentUrl}");
+                    //           context.router.push(
+                    //             PdfViewerScreenRoute(
+                    //               url: lesson.documentUrl,
+                    //               label: lesson.name,
+                    //             ),
+                    //           );
+                    //         },
+                    //         child: const Text("Download PDF"),
+                    //       )
+                    //     : Container(),
                     const SizedBox(
                       height: 16,
                     ),
 
+                    if (lesson.imageUrl.isNotEmpty)
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        width: MediaQuery.of(context).size.width,
+                        child: Image.network(
+                          lesson.imageUrl,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    const SizedBox(height: 16),
                     Text(
                       lesson.description,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    // show pdf if available
+                    // if (lesson.pdfUrl.isNotEmpty)
+                    //   Container(
+                    //     height: 200,
+                    //     color: Colors.grey,
+                    //   ),
                   ],
                 ),
               ),

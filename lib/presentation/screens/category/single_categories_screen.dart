@@ -1,31 +1,36 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:business_mates/data/models/course_categories_model.dart';
+import 'package:business_mates/presentation/cubits/manage_course/manage_course_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+
 import '../../../routes.gr.dart';
-import '../../cubits/manage_course/manage_course_cubit.dart';
 import '../../widgets/feature_item.dart';
 
-class MyCourseScreen extends StatefulWidget {
-  const MyCourseScreen({Key? key}) : super(key: key);
-  static const String routeName = '/MyCourseScreen';
+class SingleCategoryScreen extends StatefulWidget {
+  static const String routeName = '/single_category_screen';
+  const SingleCategoryScreen({super.key, required this.category});
+
+  final CategoriesModel category;
 
   @override
-  _MyCourseScreenState createState() => _MyCourseScreenState();
+  State<SingleCategoryScreen> createState() => _SingleCategoryScreenState();
 }
 
-class _MyCourseScreenState extends State<MyCourseScreen> {
+class _SingleCategoryScreenState extends State<SingleCategoryScreen> {
   late final ManageCourseCubit _manageCourseCubit;
   @override
   void initState() {
     _manageCourseCubit = context.read<ManageCourseCubit>();
+    _manageCourseCubit.getAllCoursesOfCategory(categoryId: widget.category.id);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Your Enrolled Courses")),
+      appBar: AppBar(title: Text("Course of ${widget.category.name}")),
       body: getCourses(),
     );
   }
@@ -33,21 +38,21 @@ class _MyCourseScreenState extends State<MyCourseScreen> {
   getCourses() {
     return BlocBuilder<ManageCourseCubit, ManageCourseState>(
       builder: (context, state) {
-        return state.userEnrolledCourses.isNotEmpty
+        return state.coursesOfCategory.isNotEmpty
             ? ListView.builder(
-                itemCount: state.userEnrolledCourses.length,
+                itemCount: state.coursesOfCategory.length,
                 itemBuilder: (context, index) {
                   return FeatureItem(
                     onTap: () {
                       context.router.push(CourseInfoScreenRoute(
-                        course: state.userEnrolledCourses[index],
+                        course: state.coursesOfCategory[index],
                       ));
                     },
-                    data: state.userEnrolledCourses[index],
+                    data: state.coursesOfCategory[index],
                   );
                 },
               )
-            : SizedBox(
+            : Container(
                 child: Center(
                   child: Column(
                     children: [

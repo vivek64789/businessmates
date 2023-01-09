@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:business_mates/presentation/cubits/manage_profile/manage_profile_cubit.dart';
 import '../../cubits/auth/auth_cubit.dart';
 import 'register_screen.dart';
 import '../../widgets/bm_button.dart';
@@ -115,8 +116,20 @@ class VerifyOTPScreen extends StatelessWidget {
                           await context.read<AuthCubit>().getCurrentUser();
 
                       if (user!.emailVerified) {
-                        context.router
-                            .push(RootDashboardRoute(currentIndex: 0));
+                        context
+                            .read<ManageProfileCubit>()
+                            .getUserProfile(uid: user.uid);
+                        final bool isSubscribed = context
+                            .read<ManageProfileCubit>()
+                            .state
+                            .userProfileModel
+                            .isSubscribed;
+                        print(isSubscribed);
+                        isSubscribed
+                            ? context.router.replaceAll(
+                                [RootDashboardRoute(currentIndex: 0)])
+                            : context.router
+                                .replaceAll([const PaymentScreenRoute()]);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

@@ -18,7 +18,7 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
     {
       "icon": "assets/icons/home.svg",
       "active_icon": "assets/icons/home.svg",
-      "page": HomePage(),
+      "page": const HomePage(),
     },
     {
       "icon": "assets/icons/search.svg",
@@ -110,23 +110,26 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
                 offset: const Offset(1, 1))
           ]),
       child: Padding(
-          padding: const EdgeInsets.only(
-            left: 25,
-            right: 25,
-            bottom: 15,
+        padding: const EdgeInsets.only(
+          left: 25,
+          right: 25,
+          bottom: 15,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            barItems.length,
+            (index) => BottomBarItem(
+              barItems[index]["icon"],
+              isActive: activeTab == index,
+              activeColor: primary,
+              onTap: () {
+                onPageChanged(index);
+              },
+            ),
           ),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(
-                  barItems.length,
-                  (index) => BottomBarItem(
-                        barItems[index]["icon"],
-                        isActive: activeTab == index,
-                        activeColor: primary,
-                        onTap: () {
-                          onPageChanged(index);
-                        },
-                      )))),
+        ),
+      ),
     );
   }
 }

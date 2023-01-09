@@ -73,13 +73,26 @@ abstract class RemoteDataSource {
   Stream<List<CourseModel>> streamAllCoursesOfCategory(
       {required String categoryId});
   Stream<List<CourseModel>> streamAllCourses();
-  Future<List<CourseModel>> getAllCourses();
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getAllCourses();
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllFeaturedCourses();
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getAllFreeCourses();
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getAllNewCourses();
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getAllPopularCourses();
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllTrendingCourses();
 
   Future<Either<ManageCourseSectionFailure, List<CourseSectionModel>>>
       getAllSectionsOfCourse({required CourseSectionModel courseSectionModel});
   // stream all courses
   Stream<List<CourseSectionModel>> streamAllSectionsOfCourse(
       {required CourseModel courseModel});
+
+  Future<Either<ManageCourseFailure, Unit>> enrollCourse(
+      {required CourseModel course, required String userId});
+
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getEnrolledCourses(
+      {required String userId});
 
   // Lesson sources
 
@@ -216,6 +229,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
           'zip': '',
           'country': '',
           'image_url': '',
+          'is_subscribed': false,
           'created_at': DateTime.now(),
           'updated_at': DateTime.now(),
         },
@@ -320,6 +334,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         'state': userProfile.state,
         'country': userProfile.country,
         'image_url': userProfile.imageUrl,
+        'is_subscribed': userProfile.isSubscribed,
         'updated_at': DateTime.now(),
       });
       return right(unit);
@@ -369,49 +384,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     }
   }
   // creating course categories
-
-  @override
-  Future<Either<ManageCategoriesFailure, CategoriesModel>> createCourseCategory(
-      {required String name,
-      required String description,
-      required String imageUrl}) async {
-    // upload image and get url
-    // create category in firestore
-    try {
-      final doc = await firestore
-          .collection("categories")
-          .where('name', isEqualTo: name)
-          .get();
-      if (doc.docs.isNotEmpty) {
-        throw FirebaseException(
-            plugin: "Firestore",
-            code: 'category-already-exists',
-            message: 'Category already exists');
-      } else {
-        final data = await firestore.collection("categories").add({
-          'id': "",
-          'name': name,
-          'description': description,
-          'image_url': imageUrl,
-          'created_at': DateTime.now(),
-          'updated_at': DateTime.now(),
-        });
-        // get the data from document reference and return
-        final doc = await data.get();
-        data.update({'id': doc.id});
-
-        return right(CategoriesModel.fromJson(doc.data()!));
-      }
-    } on FirebaseException catch (e) {
-      if (e.code == 'category-already-exists') {
-        return left(const ManageCategoriesFailure.categoryAlreadyExists(
-            message: 'Category already exists'));
-      } else {
-        return left(
-            const ManageCategoriesFailure.serverError(message: 'Server error'));
-      }
-    }
-  }
 
   @override
   Future<Either<ImageUploadFailure, String>> uploadSingleImage(
@@ -468,53 +440,69 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   // Courses
 
   @override
-  Future<Either<ManageCourseFailure, CourseModel>> deleteCourse(
-      {required CourseModel courseModel}) async {
-    // delete course by id inside course collection inside category collection
-    try {
-      await firestore
-          .collection("categories")
-          .doc(courseModel.categoryId)
-          .collection('courses')
-          .doc(courseModel.id)
-          .delete();
-      return right(CourseModel.empty());
-    } catch (e) {
-      return left(
-          const ManageCourseFailure.serverError(message: 'Server error'));
-    }
-  }
-
-  @override
   Future<Either<ManageCourseFailure, List<CourseModel>>>
       getAllCoursesOfCategory({required String categoryId}) async {
-    try {
-      final doc = await firestore
-          .collection("categories")
-          .doc(categoryId)
-          .collection('courses')
-          .get();
-      if (doc.docs.isNotEmpty) {
-        List<CourseModel> courses = [];
-        for (var item in doc.docs) {
-          courses.add(CourseModel.fromJson(item.data()));
+    final categoriesRef = firestore.collection('categories');
+    //  snapshot categories
+    final categoriesSnapshot = categoriesRef.doc(categoryId);
+
+    final List<CourseModel> courseList = [];
+
+    final coursesSnapshot =
+        categoriesSnapshot.collection('courses').snapshots();
+    // listen to courses snapshot
+    coursesSnapshot.map((event) => event.docs).listen(
+      (event) {
+        // loop through courses
+        for (var course in event) {
+          // add course to course list
+          final courseModel = CourseModel.fromJson(course.data());
+
+          // empty section model
+          final List<CourseSectionModel> sectionList = [];
+          // get sections of each course
+          final sectionsSnapshot =
+              course.reference.collection('sections').snapshots();
+          // listen to sections snapshot
+          sectionsSnapshot.map((event) => event.docs).listen(
+            (event) {
+              // loop through sections
+              for (var section in event) {
+                // add section to section list
+                final sectionModel =
+                    CourseSectionModel.fromJson(section.data());
+
+                // empty lesson model
+                final List<CourseLessonModel> lessonList = [];
+                // get lessons of each section
+                final lessonsSnapshot =
+                    section.reference.collection('lessons').snapshots();
+                // listen to lessons snapshot
+                lessonsSnapshot.map((event) => event.docs).listen(
+                  (event) {
+                    // loop through lessons
+                    for (var lesson in event) {
+                      // add lesson to lesson list
+                      final lessonModel =
+                          CourseLessonModel.fromJson(lesson.data());
+                      lessonList.add(lessonModel);
+                    }
+                  },
+                );
+                // add lesson list to section model
+                final newSectionModel =
+                    sectionModel.copyWith(lessons: lessonList);
+                sectionList.add(newSectionModel);
+              }
+            },
+          );
+          final newCourseModel = courseModel.copyWith(sections: sectionList);
+          courseList.add(newCourseModel);
         }
-        return right(courses);
-      } else {
-        throw FirebaseException(
-            plugin: "Firestore",
-            code: 'no-courses-found',
-            message: 'No courses found');
-      }
-    } on FirebaseException catch (e) {
-      if (e.code == 'no-courses-found') {
-        return left(
-            const ManageCourseFailure.notFound(message: 'No courses found'));
-      } else {
-        return left(
-            const ManageCourseFailure.serverError(message: 'Server error'));
-      }
-    }
+      },
+    );
+
+    return Right(courseList);
   }
 
   @override
@@ -675,29 +663,458 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<List<CourseModel>> getAllCourses() async {
-    // write a query to fetch all courses inside a categories from a firestore database using in flutter.
-//following is structure of the database
-//root collection is categories
-//categories has various field and each categories have their own collection named courses and i need that all courses into single list and return as list of courses model
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getAllCourses() async {
+    try {
+      // reference to categories collection
+      final categoriesRef = firestore.collection('categories');
+      //  snapshot categories
+      final categoriesSnapshot = await categoriesRef.get();
 
-    // get all categories
-    final categories = await firestore.collection('categories').get();
-    // empty course list
-    List<CourseModel> courseList = [];
-    // loop through categories
-    for (var category in categories.docs) {
-      // get all courses of each category
-      final courses = await category.reference.collection('courses').get();
-      // loop through courses
-      for (var course in courses.docs) {
-        // add course to course list
-        courseList.add(CourseModel.fromJson(course.data()));
+      final List<CourseModel> courseList = [];
+
+      for (var category in categoriesSnapshot.docs) {
+        final coursesSnapshot =
+            await category.reference.collection('courses').get();
+        // listen to courses snapshot
+        for (var course in coursesSnapshot.docs) {
+          final courseModel = CourseModel.fromJson(course.data());
+
+          // empty section model
+          final List<CourseSectionModel> sectionList = [];
+          // get sections of each course
+          final sectionsSnapshot =
+              await course.reference.collection('sections').get();
+
+          for (var section in sectionsSnapshot.docs) {
+            final sectionModel = CourseSectionModel.fromJson(section.data());
+
+            // empty lesson model
+            final List<CourseLessonModel> lessonList = [];
+            // get lessons of each section
+            final lessonsSnapshot =
+                await section.reference.collection('lessons').get();
+            // listen to lessons snapshot
+            for (var lesson in lessonsSnapshot.docs) {
+              final lessonModel = CourseLessonModel.fromJson(lesson.data());
+
+              lessonList.add(lessonModel);
+            }
+
+            // add lesson list to section model
+            final newSectionModel = sectionModel.copyWith(lessons: lessonList);
+            sectionList.add(newSectionModel);
+          }
+
+          final newCourseModel = courseModel.copyWith(sections: sectionList);
+          courseList.add(newCourseModel);
+        }
       }
-    }
 
-    return Future.value(courseList);
+      return Right(courseList);
+    } catch (e) {
+      print(e);
+      return const Left(
+        ManageCourseFailure.serverError(message: "Something went wrong"),
+      );
+    }
   }
 
+  @override
+  Future<Either<ManageCourseFailure, Unit>> enrollCourse(
+      {required CourseModel course, required String userId}) async {
+    try {
+      // create collection reference
+      final userRef = firestore.collection('users').doc(userId);
+      // create new collection enrolledCourses
+      final enrolledCoursesRef = userRef.collection('enrolled_courses');
+      // create new document with course id
+      final enrolledCourseRef = enrolledCoursesRef.doc(course.id);
+      final data = {
+        'course_id': course.id,
+        'category_id': course.categoryId,
+      };
+
+      // save course id to enrolledCourses collection
+      enrolledCourseRef.set(data);
+      return const Right(unit);
+    } catch (e) {
+      print(e);
+      return const Left(ManageCourseFailure.serverError());
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getEnrolledCourses(
+      {required String userId}) async {
+    final userRef = firestore.collection('users').doc(userId);
+    // create new collection enrolledCourses
+    final enrolledCoursesRef = userRef.collection('enrolled_courses');
+    // get all enrolled courses
+    final enrolledCourses = await enrolledCoursesRef.get();
+    try {
+      // create collection reference
+      // empty course list
+      List<CourseModel> courseList = [];
+      // loop through enrolled courses
+      for (var enrolledCourse in enrolledCourses.docs) {
+        // get course id
+        final courseId = enrolledCourse.data()['course_id'];
+        final categoryId = enrolledCourse.data()['category_id'];
+        // get course from courses collection
+        final course = await firestore
+            .collection('categories')
+            .doc(categoryId)
+            .collection('courses')
+            .doc(courseId)
+            .get();
+
+        // add course to course list
+
+        //  snapshot categories
+
+        final courseModel =
+            CourseModel.fromJson(course.data() as Map<String, dynamic>);
+
+        // empty section model
+        final List<CourseSectionModel> sectionList = [];
+        // get sections of each course
+        final sectionsSnapshot =
+            course.reference.collection('sections').snapshots();
+        // listen to sections snapshot
+        sectionsSnapshot.map((event) => event.docs).listen(
+          (event) {
+            // loop through sections
+            for (var section in event) {
+              // add section to section list
+              final sectionModel = CourseSectionModel.fromJson(section.data());
+
+              // empty lesson model
+              final List<CourseLessonModel> lessonList = [];
+              // get lessons of each section
+              final lessonsSnapshot =
+                  section.reference.collection('lessons').snapshots();
+              // listen to lessons snapshot
+              lessonsSnapshot.map((event) => event.docs).listen(
+                (event) {
+                  // loop through lessons
+                  for (var lesson in event) {
+                    // add lesson to lesson list
+                    final lessonModel =
+                        CourseLessonModel.fromJson(lesson.data());
+                    lessonList.add(lessonModel);
+                  }
+                },
+              );
+              // add lesson list to section model
+              final newSectionModel =
+                  sectionModel.copyWith(lessons: lessonList);
+              sectionList.add(newSectionModel);
+            }
+          },
+        );
+        final newCourseModel = courseModel.copyWith(sections: sectionList);
+        courseList.add(newCourseModel);
+      }
+      return right(courseList);
+    } catch (e) {
+      print(e);
+      return const Left(ManageCourseFailure.serverError());
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllFeaturedCourses() async {
+    try {
+      // reference to categories collection
+      final categoriesRef = firestore.collection('categories');
+      //  snapshot categories
+      final categoriesSnapshot = await categoriesRef.get();
+
+      final List<CourseModel> courseList = [];
+
+      for (var category in categoriesSnapshot.docs) {
+        final coursesSnapshot =
+            await category.reference.collection('courses').get();
+        // listen to courses snapshot
+        for (var course in coursesSnapshot.docs) {
+          final courseModel = CourseModel.fromJson(course.data());
+
+          if (courseModel.isFeatured == true) {
+            // empty section model
+            final List<CourseSectionModel> sectionList = [];
+            // get sections of each course
+            final sectionsSnapshot =
+                await course.reference.collection('sections').get();
+
+            for (var section in sectionsSnapshot.docs) {
+              final sectionModel = CourseSectionModel.fromJson(section.data());
+
+              // empty lesson model
+              final List<CourseLessonModel> lessonList = [];
+              // get lessons of each section
+              final lessonsSnapshot =
+                  await section.reference.collection('lessons').get();
+              // listen to lessons snapshot
+              for (var lesson in lessonsSnapshot.docs) {
+                final lessonModel = CourseLessonModel.fromJson(lesson.data());
+                lessonList.add(lessonModel);
+              }
+
+              // add lesson list to section model
+              final newSectionModel =
+                  sectionModel.copyWith(lessons: lessonList);
+              sectionList.add(newSectionModel);
+            }
+
+            final newCourseModel = courseModel.copyWith(sections: sectionList);
+            courseList.add(newCourseModel);
+          }
+        }
+      }
+
+      return Right(courseList);
+    } catch (e) {
+      return const Left(
+        ManageCourseFailure.serverError(message: "Something went wrong"),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllFreeCourses() async {
+    try {
+      // reference to categories collection
+      final categoriesRef = firestore.collection('categories');
+      //  snapshot categories
+      final categoriesSnapshot = await categoriesRef.get();
+
+      final List<CourseModel> courseList = [];
+
+      for (var category in categoriesSnapshot.docs) {
+        final coursesSnapshot =
+            await category.reference.collection('courses').get();
+        // listen to courses snapshot
+        for (var course in coursesSnapshot.docs) {
+          final courseModel = CourseModel.fromJson(course.data());
+
+          if (courseModel.isFree == true) {
+            // empty section model
+            final List<CourseSectionModel> sectionList = [];
+            // get sections of each course
+            final sectionsSnapshot =
+                await course.reference.collection('sections').get();
+
+            for (var section in sectionsSnapshot.docs) {
+              final sectionModel = CourseSectionModel.fromJson(section.data());
+
+              // empty lesson model
+              final List<CourseLessonModel> lessonList = [];
+              // get lessons of each section
+              final lessonsSnapshot =
+                  await section.reference.collection('lessons').get();
+              // listen to lessons snapshot
+              for (var lesson in lessonsSnapshot.docs) {
+                final lessonModel = CourseLessonModel.fromJson(lesson.data());
+                lessonList.add(lessonModel);
+              }
+
+              // add lesson list to section model
+              final newSectionModel =
+                  sectionModel.copyWith(lessons: lessonList);
+              sectionList.add(newSectionModel);
+            }
+
+            final newCourseModel = courseModel.copyWith(sections: sectionList);
+            courseList.add(newCourseModel);
+          }
+        }
+      }
+
+      return Right(courseList);
+    } catch (e) {
+      return const Left(
+        ManageCourseFailure.serverError(message: "Something went wrong"),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllNewCourses() async {
+    try {
+      // reference to categories collection
+      final categoriesRef = firestore.collection('categories');
+      //  snapshot categories
+      final categoriesSnapshot = await categoriesRef.get();
+
+      final List<CourseModel> courseList = [];
+
+      for (var category in categoriesSnapshot.docs) {
+        final coursesSnapshot =
+            await category.reference.collection('courses').get();
+        // listen to courses snapshot
+        for (var course in coursesSnapshot.docs) {
+          final courseModel = CourseModel.fromJson(course.data());
+
+          if (courseModel.isNew == true) {
+            // empty section model
+            final List<CourseSectionModel> sectionList = [];
+            // get sections of each course
+            final sectionsSnapshot =
+                await course.reference.collection('sections').get();
+
+            for (var section in sectionsSnapshot.docs) {
+              final sectionModel = CourseSectionModel.fromJson(section.data());
+
+              // empty lesson model
+              final List<CourseLessonModel> lessonList = [];
+              // get lessons of each section
+              final lessonsSnapshot =
+                  await section.reference.collection('lessons').get();
+              // listen to lessons snapshot
+              for (var lesson in lessonsSnapshot.docs) {
+                final lessonModel = CourseLessonModel.fromJson(lesson.data());
+                lessonList.add(lessonModel);
+              }
+
+              // add lesson list to section model
+              final newSectionModel =
+                  sectionModel.copyWith(lessons: lessonList);
+              sectionList.add(newSectionModel);
+            }
+
+            final newCourseModel = courseModel.copyWith(sections: sectionList);
+            courseList.add(newCourseModel);
+          }
+        }
+      }
+
+      return Right(courseList);
+    } catch (e) {
+      return const Left(
+        ManageCourseFailure.serverError(message: "Something went wrong"),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllPopularCourses() async {
+    try {
+      // reference to categories collection
+      final categoriesRef = firestore.collection('categories');
+      //  snapshot categories
+      final categoriesSnapshot = await categoriesRef.get();
+
+      final List<CourseModel> courseList = [];
+
+      for (var category in categoriesSnapshot.docs) {
+        final coursesSnapshot =
+            await category.reference.collection('courses').get();
+        // listen to courses snapshot
+        for (var course in coursesSnapshot.docs) {
+          final courseModel = CourseModel.fromJson(course.data());
+
+          if (courseModel.isBestSeller == true) {
+            // empty section model
+            final List<CourseSectionModel> sectionList = [];
+            // get sections of each course
+            final sectionsSnapshot =
+                await course.reference.collection('sections').get();
+
+            for (var section in sectionsSnapshot.docs) {
+              final sectionModel = CourseSectionModel.fromJson(section.data());
+
+              // empty lesson model
+              final List<CourseLessonModel> lessonList = [];
+              // get lessons of each section
+              final lessonsSnapshot =
+                  await section.reference.collection('lessons').get();
+              // listen to lessons snapshot
+              for (var lesson in lessonsSnapshot.docs) {
+                final lessonModel = CourseLessonModel.fromJson(lesson.data());
+                lessonList.add(lessonModel);
+              }
+
+              // add lesson list to section model
+              final newSectionModel =
+                  sectionModel.copyWith(lessons: lessonList);
+              sectionList.add(newSectionModel);
+            }
+
+            final newCourseModel = courseModel.copyWith(sections: sectionList);
+            courseList.add(newCourseModel);
+          }
+        }
+      }
+
+      return Right(courseList);
+    } catch (e) {
+      return const Left(
+        ManageCourseFailure.serverError(message: "Something went wrong"),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllTrendingCourses() async {
+    try {
+      // reference to categories collection
+      final categoriesRef = firestore.collection('categories');
+      //  snapshot categories
+      final categoriesSnapshot = await categoriesRef.get();
+
+      final List<CourseModel> courseList = [];
+
+      for (var category in categoriesSnapshot.docs) {
+        final coursesSnapshot =
+            await category.reference.collection('courses').get();
+        // listen to courses snapshot
+        for (var course in coursesSnapshot.docs) {
+          final courseModel = CourseModel.fromJson(course.data());
+
+          if (courseModel.isTrending == true) {
+            // empty section model
+            final List<CourseSectionModel> sectionList = [];
+            // get sections of each course
+            final sectionsSnapshot =
+                await course.reference.collection('sections').get();
+
+            for (var section in sectionsSnapshot.docs) {
+              final sectionModel = CourseSectionModel.fromJson(section.data());
+
+              // empty lesson model
+              final List<CourseLessonModel> lessonList = [];
+              // get lessons of each section
+              final lessonsSnapshot =
+                  await section.reference.collection('lessons').get();
+              // listen to lessons snapshot
+              for (var lesson in lessonsSnapshot.docs) {
+                final lessonModel = CourseLessonModel.fromJson(lesson.data());
+                lessonList.add(lessonModel);
+              }
+
+              // add lesson list to section model
+              final newSectionModel =
+                  sectionModel.copyWith(lessons: lessonList);
+              sectionList.add(newSectionModel);
+            }
+
+            final newCourseModel = courseModel.copyWith(sections: sectionList);
+            courseList.add(newCourseModel);
+          }
+        }
+      }
+
+      return Right(courseList);
+    } catch (e) {
+      return const Left(
+        ManageCourseFailure.serverError(message: "Something went wrong"),
+      );
+    }
+  }
   //
 }

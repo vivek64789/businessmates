@@ -16,6 +16,7 @@ class UserProfileModel with _$UserProfileModel {
     required String city,
     required String state,
     required String country,
+    @JsonKey(name: 'is_subscribed') required bool isSubscribed,
   }) = _UserProfileModel;
 
   const UserProfileModel._();
@@ -31,6 +32,7 @@ class UserProfileModel with _$UserProfileModel {
         state: '',
         country: '',
         imageUrl: '',
+        isSubscribed: false,
       );
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) =>

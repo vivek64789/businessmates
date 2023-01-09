@@ -21,7 +21,18 @@ mixin _$ManageCourseState {
       throw _privateConstructorUsedError;
   LoadingStatus get manageCoursesLoadingStatus =>
       throw _privateConstructorUsedError;
+  LoadingStatus get enrollCourseLoadingStatus =>
+      throw _privateConstructorUsedError;
   List<CourseModel> get courses => throw _privateConstructorUsedError;
+  List<CourseModel> get coursesOfCategory => throw _privateConstructorUsedError;
+  List<CourseModel> get userEnrolledCourses =>
+      throw _privateConstructorUsedError;
+  List<CourseModel> get featuredCourses => throw _privateConstructorUsedError;
+  List<CourseModel> get freeCourses => throw _privateConstructorUsedError;
+  List<CourseModel> get popularCourses => throw _privateConstructorUsedError;
+  List<CourseModel> get trendingCourses => throw _privateConstructorUsedError;
+  List<CourseModel> get newCourses => throw _privateConstructorUsedError;
+  List<CourseModel> get allCourses => throw _privateConstructorUsedError;
   CourseModel get courseModel => throw _privateConstructorUsedError;
   CourseModel get selectedFeaturedCourse => throw _privateConstructorUsedError;
 
@@ -40,7 +51,16 @@ abstract class $ManageCourseStateCopyWith<$Res> {
       {bool isInProgress,
       Option<ManageCourseFailure> failureMessageOption,
       LoadingStatus manageCoursesLoadingStatus,
+      LoadingStatus enrollCourseLoadingStatus,
       List<CourseModel> courses,
+      List<CourseModel> coursesOfCategory,
+      List<CourseModel> userEnrolledCourses,
+      List<CourseModel> featuredCourses,
+      List<CourseModel> freeCourses,
+      List<CourseModel> popularCourses,
+      List<CourseModel> trendingCourses,
+      List<CourseModel> newCourses,
+      List<CourseModel> allCourses,
       CourseModel courseModel,
       CourseModel selectedFeaturedCourse});
 
@@ -64,7 +84,16 @@ class _$ManageCourseStateCopyWithImpl<$Res, $Val extends ManageCourseState>
     Object? isInProgress = null,
     Object? failureMessageOption = null,
     Object? manageCoursesLoadingStatus = null,
+    Object? enrollCourseLoadingStatus = null,
     Object? courses = null,
+    Object? coursesOfCategory = null,
+    Object? userEnrolledCourses = null,
+    Object? featuredCourses = null,
+    Object? freeCourses = null,
+    Object? popularCourses = null,
+    Object? trendingCourses = null,
+    Object? newCourses = null,
+    Object? allCourses = null,
     Object? courseModel = null,
     Object? selectedFeaturedCourse = null,
   }) {
@@ -81,9 +110,45 @@ class _$ManageCourseStateCopyWithImpl<$Res, $Val extends ManageCourseState>
           ? _value.manageCoursesLoadingStatus
           : manageCoursesLoadingStatus // ignore: cast_nullable_to_non_nullable
               as LoadingStatus,
+      enrollCourseLoadingStatus: null == enrollCourseLoadingStatus
+          ? _value.enrollCourseLoadingStatus
+          : enrollCourseLoadingStatus // ignore: cast_nullable_to_non_nullable
+              as LoadingStatus,
       courses: null == courses
           ? _value.courses
           : courses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      coursesOfCategory: null == coursesOfCategory
+          ? _value.coursesOfCategory
+          : coursesOfCategory // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      userEnrolledCourses: null == userEnrolledCourses
+          ? _value.userEnrolledCourses
+          : userEnrolledCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      featuredCourses: null == featuredCourses
+          ? _value.featuredCourses
+          : featuredCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      freeCourses: null == freeCourses
+          ? _value.freeCourses
+          : freeCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      popularCourses: null == popularCourses
+          ? _value.popularCourses
+          : popularCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      trendingCourses: null == trendingCourses
+          ? _value.trendingCourses
+          : trendingCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      newCourses: null == newCourses
+          ? _value.newCourses
+          : newCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      allCourses: null == allCourses
+          ? _value.allCourses
+          : allCourses // ignore: cast_nullable_to_non_nullable
               as List<CourseModel>,
       courseModel: null == courseModel
           ? _value.courseModel
@@ -125,7 +190,16 @@ abstract class _$$_ManageCourseStateCopyWith<$Res>
       {bool isInProgress,
       Option<ManageCourseFailure> failureMessageOption,
       LoadingStatus manageCoursesLoadingStatus,
+      LoadingStatus enrollCourseLoadingStatus,
       List<CourseModel> courses,
+      List<CourseModel> coursesOfCategory,
+      List<CourseModel> userEnrolledCourses,
+      List<CourseModel> featuredCourses,
+      List<CourseModel> freeCourses,
+      List<CourseModel> popularCourses,
+      List<CourseModel> trendingCourses,
+      List<CourseModel> newCourses,
+      List<CourseModel> allCourses,
       CourseModel courseModel,
       CourseModel selectedFeaturedCourse});
 
@@ -149,7 +223,16 @@ class __$$_ManageCourseStateCopyWithImpl<$Res>
     Object? isInProgress = null,
     Object? failureMessageOption = null,
     Object? manageCoursesLoadingStatus = null,
+    Object? enrollCourseLoadingStatus = null,
     Object? courses = null,
+    Object? coursesOfCategory = null,
+    Object? userEnrolledCourses = null,
+    Object? featuredCourses = null,
+    Object? freeCourses = null,
+    Object? popularCourses = null,
+    Object? trendingCourses = null,
+    Object? newCourses = null,
+    Object? allCourses = null,
     Object? courseModel = null,
     Object? selectedFeaturedCourse = null,
   }) {
@@ -166,9 +249,45 @@ class __$$_ManageCourseStateCopyWithImpl<$Res>
           ? _value.manageCoursesLoadingStatus
           : manageCoursesLoadingStatus // ignore: cast_nullable_to_non_nullable
               as LoadingStatus,
+      enrollCourseLoadingStatus: null == enrollCourseLoadingStatus
+          ? _value.enrollCourseLoadingStatus
+          : enrollCourseLoadingStatus // ignore: cast_nullable_to_non_nullable
+              as LoadingStatus,
       courses: null == courses
           ? _value._courses
           : courses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      coursesOfCategory: null == coursesOfCategory
+          ? _value._coursesOfCategory
+          : coursesOfCategory // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      userEnrolledCourses: null == userEnrolledCourses
+          ? _value._userEnrolledCourses
+          : userEnrolledCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      featuredCourses: null == featuredCourses
+          ? _value._featuredCourses
+          : featuredCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      freeCourses: null == freeCourses
+          ? _value._freeCourses
+          : freeCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      popularCourses: null == popularCourses
+          ? _value._popularCourses
+          : popularCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      trendingCourses: null == trendingCourses
+          ? _value._trendingCourses
+          : trendingCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      newCourses: null == newCourses
+          ? _value._newCourses
+          : newCourses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>,
+      allCourses: null == allCourses
+          ? _value._allCourses
+          : allCourses // ignore: cast_nullable_to_non_nullable
               as List<CourseModel>,
       courseModel: null == courseModel
           ? _value.courseModel
@@ -189,10 +308,27 @@ class _$_ManageCourseState implements _ManageCourseState {
       {required this.isInProgress,
       required this.failureMessageOption,
       required this.manageCoursesLoadingStatus,
+      required this.enrollCourseLoadingStatus,
       required final List<CourseModel> courses,
+      required final List<CourseModel> coursesOfCategory,
+      required final List<CourseModel> userEnrolledCourses,
+      required final List<CourseModel> featuredCourses,
+      required final List<CourseModel> freeCourses,
+      required final List<CourseModel> popularCourses,
+      required final List<CourseModel> trendingCourses,
+      required final List<CourseModel> newCourses,
+      required final List<CourseModel> allCourses,
       required this.courseModel,
       required this.selectedFeaturedCourse})
-      : _courses = courses;
+      : _courses = courses,
+        _coursesOfCategory = coursesOfCategory,
+        _userEnrolledCourses = userEnrolledCourses,
+        _featuredCourses = featuredCourses,
+        _freeCourses = freeCourses,
+        _popularCourses = popularCourses,
+        _trendingCourses = trendingCourses,
+        _newCourses = newCourses,
+        _allCourses = allCourses;
 
   @override
   final bool isInProgress;
@@ -200,12 +336,80 @@ class _$_ManageCourseState implements _ManageCourseState {
   final Option<ManageCourseFailure> failureMessageOption;
   @override
   final LoadingStatus manageCoursesLoadingStatus;
+  @override
+  final LoadingStatus enrollCourseLoadingStatus;
   final List<CourseModel> _courses;
   @override
   List<CourseModel> get courses {
     if (_courses is EqualUnmodifiableListView) return _courses;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_courses);
+  }
+
+  final List<CourseModel> _coursesOfCategory;
+  @override
+  List<CourseModel> get coursesOfCategory {
+    if (_coursesOfCategory is EqualUnmodifiableListView)
+      return _coursesOfCategory;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_coursesOfCategory);
+  }
+
+  final List<CourseModel> _userEnrolledCourses;
+  @override
+  List<CourseModel> get userEnrolledCourses {
+    if (_userEnrolledCourses is EqualUnmodifiableListView)
+      return _userEnrolledCourses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_userEnrolledCourses);
+  }
+
+  final List<CourseModel> _featuredCourses;
+  @override
+  List<CourseModel> get featuredCourses {
+    if (_featuredCourses is EqualUnmodifiableListView) return _featuredCourses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_featuredCourses);
+  }
+
+  final List<CourseModel> _freeCourses;
+  @override
+  List<CourseModel> get freeCourses {
+    if (_freeCourses is EqualUnmodifiableListView) return _freeCourses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_freeCourses);
+  }
+
+  final List<CourseModel> _popularCourses;
+  @override
+  List<CourseModel> get popularCourses {
+    if (_popularCourses is EqualUnmodifiableListView) return _popularCourses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_popularCourses);
+  }
+
+  final List<CourseModel> _trendingCourses;
+  @override
+  List<CourseModel> get trendingCourses {
+    if (_trendingCourses is EqualUnmodifiableListView) return _trendingCourses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_trendingCourses);
+  }
+
+  final List<CourseModel> _newCourses;
+  @override
+  List<CourseModel> get newCourses {
+    if (_newCourses is EqualUnmodifiableListView) return _newCourses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_newCourses);
+  }
+
+  final List<CourseModel> _allCourses;
+  @override
+  List<CourseModel> get allCourses {
+    if (_allCourses is EqualUnmodifiableListView) return _allCourses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allCourses);
   }
 
   @override
@@ -215,7 +419,7 @@ class _$_ManageCourseState implements _ManageCourseState {
 
   @override
   String toString() {
-    return 'ManageCourseState(isInProgress: $isInProgress, failureMessageOption: $failureMessageOption, manageCoursesLoadingStatus: $manageCoursesLoadingStatus, courses: $courses, courseModel: $courseModel, selectedFeaturedCourse: $selectedFeaturedCourse)';
+    return 'ManageCourseState(isInProgress: $isInProgress, failureMessageOption: $failureMessageOption, manageCoursesLoadingStatus: $manageCoursesLoadingStatus, enrollCourseLoadingStatus: $enrollCourseLoadingStatus, courses: $courses, coursesOfCategory: $coursesOfCategory, userEnrolledCourses: $userEnrolledCourses, featuredCourses: $featuredCourses, freeCourses: $freeCourses, popularCourses: $popularCourses, trendingCourses: $trendingCourses, newCourses: $newCourses, allCourses: $allCourses, courseModel: $courseModel, selectedFeaturedCourse: $selectedFeaturedCourse)';
   }
 
   @override
@@ -231,7 +435,26 @@ class _$_ManageCourseState implements _ManageCourseState {
                     manageCoursesLoadingStatus) ||
                 other.manageCoursesLoadingStatus ==
                     manageCoursesLoadingStatus) &&
+            (identical(other.enrollCourseLoadingStatus,
+                    enrollCourseLoadingStatus) ||
+                other.enrollCourseLoadingStatus == enrollCourseLoadingStatus) &&
             const DeepCollectionEquality().equals(other._courses, _courses) &&
+            const DeepCollectionEquality()
+                .equals(other._coursesOfCategory, _coursesOfCategory) &&
+            const DeepCollectionEquality()
+                .equals(other._userEnrolledCourses, _userEnrolledCourses) &&
+            const DeepCollectionEquality()
+                .equals(other._featuredCourses, _featuredCourses) &&
+            const DeepCollectionEquality()
+                .equals(other._freeCourses, _freeCourses) &&
+            const DeepCollectionEquality()
+                .equals(other._popularCourses, _popularCourses) &&
+            const DeepCollectionEquality()
+                .equals(other._trendingCourses, _trendingCourses) &&
+            const DeepCollectionEquality()
+                .equals(other._newCourses, _newCourses) &&
+            const DeepCollectionEquality()
+                .equals(other._allCourses, _allCourses) &&
             (identical(other.courseModel, courseModel) ||
                 other.courseModel == courseModel) &&
             (identical(other.selectedFeaturedCourse, selectedFeaturedCourse) ||
@@ -244,7 +467,16 @@ class _$_ManageCourseState implements _ManageCourseState {
       isInProgress,
       failureMessageOption,
       manageCoursesLoadingStatus,
+      enrollCourseLoadingStatus,
       const DeepCollectionEquality().hash(_courses),
+      const DeepCollectionEquality().hash(_coursesOfCategory),
+      const DeepCollectionEquality().hash(_userEnrolledCourses),
+      const DeepCollectionEquality().hash(_featuredCourses),
+      const DeepCollectionEquality().hash(_freeCourses),
+      const DeepCollectionEquality().hash(_popularCourses),
+      const DeepCollectionEquality().hash(_trendingCourses),
+      const DeepCollectionEquality().hash(_newCourses),
+      const DeepCollectionEquality().hash(_allCourses),
       courseModel,
       selectedFeaturedCourse);
 
@@ -261,7 +493,16 @@ abstract class _ManageCourseState implements ManageCourseState {
           {required final bool isInProgress,
           required final Option<ManageCourseFailure> failureMessageOption,
           required final LoadingStatus manageCoursesLoadingStatus,
+          required final LoadingStatus enrollCourseLoadingStatus,
           required final List<CourseModel> courses,
+          required final List<CourseModel> coursesOfCategory,
+          required final List<CourseModel> userEnrolledCourses,
+          required final List<CourseModel> featuredCourses,
+          required final List<CourseModel> freeCourses,
+          required final List<CourseModel> popularCourses,
+          required final List<CourseModel> trendingCourses,
+          required final List<CourseModel> newCourses,
+          required final List<CourseModel> allCourses,
           required final CourseModel courseModel,
           required final CourseModel selectedFeaturedCourse}) =
       _$_ManageCourseState;
@@ -273,7 +514,25 @@ abstract class _ManageCourseState implements ManageCourseState {
   @override
   LoadingStatus get manageCoursesLoadingStatus;
   @override
+  LoadingStatus get enrollCourseLoadingStatus;
+  @override
   List<CourseModel> get courses;
+  @override
+  List<CourseModel> get coursesOfCategory;
+  @override
+  List<CourseModel> get userEnrolledCourses;
+  @override
+  List<CourseModel> get featuredCourses;
+  @override
+  List<CourseModel> get freeCourses;
+  @override
+  List<CourseModel> get popularCourses;
+  @override
+  List<CourseModel> get trendingCourses;
+  @override
+  List<CourseModel> get newCourses;
+  @override
+  List<CourseModel> get allCourses;
   @override
   CourseModel get courseModel;
   @override

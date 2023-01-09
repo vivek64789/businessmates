@@ -1,3 +1,6 @@
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+
 import 'core/design/light_theme.dart';
 import 'routes.gr.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,13 +20,21 @@ import 'presentation/cubits/manage_profile/manage_profile_cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FlutterDownloader.initialize(
+      debug:
+          true, // optional: set to false to disable printing logs to console (default: true)
+      ignoreSsl:
+          true // option: set to false to disable working with http links (default: false)
+      );
+  Stripe.publishableKey =
+      "pk_test_51Ih5GzHmsIXlXA5B2yqi16ahSis9qPIV9w1dX3M9nsdesNiEIaj7EgqByz8eN0TJlyRZrD8kDKaKdyifNybdZtue00w4N0rVya";
 
   configureDependencies();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  AppRouter appRouter = AppRouter();
+  final AppRouter appRouter = AppRouter();
 
   MyApp({super.key});
   @override
@@ -69,7 +80,7 @@ class MyApp extends StatelessWidget {
               ],
               child: MaterialApp.router(
                 debugShowCheckedModeBanner: false,
-                title: 'Business Mate Admin',
+                title: 'Business Mate',
                 theme: lightTheme(),
                 routeInformationParser: appRouter.defaultRouteParser(),
                 routerDelegate: appRouter.delegate(),

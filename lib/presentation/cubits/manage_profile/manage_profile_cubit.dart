@@ -70,6 +70,21 @@ class ManageProfileCubit extends Cubit<ManageProfileState> {
   // }
 
   // stream all courses of a category
+  Future<void> getUserProfile({required String uid}) async {
+    emit(state.copyWith(manageProfileLoadingStatus: LoadingStatus.loading));
+    final failureOrProfile = await _repository.getUserProfile(uid: uid);
+    failureOrProfile.fold(
+      (l) => emit(state.copyWith(
+        manageProfileLoadingStatus: LoadingStatus.error,
+      )),
+      (r) => emit(
+        state.copyWith(
+            userProfileModel: r,
+            manageProfileLoadingStatus: LoadingStatus.loaded),
+      ),
+    );
+  }
+
   Stream<UserProfileModel> streamUserProfile({required String uid}) async* {
     yield* _repository.streamUserProfile(uid: uid);
   }

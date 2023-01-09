@@ -6,7 +6,6 @@ import 'login_screen.dart';
 import 'verify_otp_screen.dart';
 import '../../widgets/bm_button.dart';
 import '../../widgets/bm_text_form_field.dart';
-import '../../../routes.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -169,14 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         );
                       },
                     );
-                    if (state.registerLoadingStatus == LoadingStatus.loaded &&
-                        state.currentLoggedInUser!.emailVerified == true) {
-                      context.router.replace(RootDashboardRoute(
-                        currentIndex: 0,
-                      ));
-                    } else if (state.loginLoadingStatus ==
-                            LoadingStatus.loaded &&
-                        state.currentLoggedInUser!.emailVerified == false) {
+                    if (state.registerLoadingStatus == LoadingStatus.loaded) {
                       context.router.replaceNamed(VerifyOTPScreen.routeName);
                     }
                   },

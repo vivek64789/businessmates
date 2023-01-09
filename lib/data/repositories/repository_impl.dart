@@ -133,8 +133,6 @@ class RepositoryImpl implements Repository {
     }
   }
 
- 
-
   @override
   Future<Either<ImageUploadFailure, String>> uploadSingleImage(
       {required File image}) async {
@@ -144,8 +142,6 @@ class RepositoryImpl implements Repository {
       return left(const ImageUploadFailure.noInternetConnection());
     }
   }
-
-
 
   @override
   Future<Either<ManageCategoriesFailure, List<CategoriesModel>>>
@@ -162,17 +158,12 @@ class RepositoryImpl implements Repository {
     yield* remoteDataSource.streamAllCourseCategories();
   }
 
-
-
   @override
   Stream<List<CourseModel>> streamAllCourseOfCategories(
       {required String categoryId}) async* {
     yield* remoteDataSource.streamAllCoursesOfCategory(categoryId: categoryId);
   }
 
- 
-
- 
   @override
   Future<Either<ManageCourseSectionFailure, List<CourseSectionModel>>>
       getAllSectionsOfCourse(
@@ -190,11 +181,6 @@ class RepositoryImpl implements Repository {
       {required CourseModel courseModel}) async* {
     yield* remoteDataSource.streamAllSectionsOfCourse(courseModel: courseModel);
   }
-
-
-
-
-
 
   @override
   Future<Either<ManageCourseLessonFailure, List<CourseLessonModel>>>
@@ -219,7 +205,6 @@ class RepositoryImpl implements Repository {
     }
   }
 
-
   @override
   Stream<UserProfileModel> streamUserProfile({required String uid}) async* {
     if (await networkInfo.isConnected) {
@@ -228,15 +213,102 @@ class RepositoryImpl implements Repository {
       yield* const Stream.empty();
     }
   }
-  
+
   @override
-  Stream<List<CourseModel>> streamAllCourses() async*{
+  Stream<List<CourseModel>> streamAllCourses() async* {
     if (await networkInfo.isConnected) {
       yield* remoteDataSource.streamAllCourses();
     } else {
       yield* const Stream.empty();
     }
   }
-  
- 
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllCoursesOfCategory({required String categoryId}) async {
+    if (await networkInfo.isConnected) {
+      return remoteDataSource.getAllCoursesOfCategory(categoryId: categoryId);
+    } else {
+      return left(const ManageCourseFailure.noInternetConnection());
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, Unit>> enrollCourse(
+      {required CourseModel course, required String userId}) async {
+    if (await networkInfo.isConnected) {
+      return remoteDataSource.enrollCourse(course: course, userId: userId);
+    } else {
+      return left(const ManageCourseFailure.noInternetConnection());
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getEnrolledCourses(
+      {required String userId}) async {
+    if (await networkInfo.isConnected) {
+      return remoteDataSource.getEnrolledCourses(userId: userId);
+    } else {
+      return left(const ManageCourseFailure.noInternetConnection());
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllFeaturedCourses() async {
+    if (await networkInfo.isConnected) {
+      return remoteDataSource.getAllFeaturedCourses();
+    } else {
+      return left(const ManageCourseFailure.noInternetConnection());
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllFreeCourses() async {
+    if (await networkInfo.isConnected) {
+      return remoteDataSource.getAllFreeCourses();
+    } else {
+      return left(const ManageCourseFailure.noInternetConnection());
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllNewCourses() async {
+    if (await networkInfo.isConnected) {
+      return remoteDataSource.getAllNewCourses();
+    } else {
+      return left(const ManageCourseFailure.noInternetConnection());
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllPopularCourses() async {
+    if (await networkInfo.isConnected) {
+      return remoteDataSource.getAllPopularCourses();
+    } else {
+      return left(const ManageCourseFailure.noInternetConnection());
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>>
+      getAllTrendingCourses() async {
+    if (await networkInfo.isConnected) {
+      return remoteDataSource.getAllTrendingCourses();
+    } else {
+      return left(const ManageCourseFailure.noInternetConnection());
+    }
+  }
+
+  @override
+  Future<Either<ManageCourseFailure, List<CourseModel>>> getAllCourses() async {
+    if (await networkInfo.isConnected) {
+      return remoteDataSource.getAllCourses();
+    } else {
+      return left(const ManageCourseFailure.noInternetConnection());
+    }
+  }
 }

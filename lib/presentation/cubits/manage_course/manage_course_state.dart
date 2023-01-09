@@ -6,8 +6,16 @@ class ManageCourseState with _$ManageCourseState {
     required bool isInProgress,
     required Option<ManageCourseFailure> failureMessageOption,
     required LoadingStatus manageCoursesLoadingStatus,
+    required LoadingStatus enrollCourseLoadingStatus,
     required List<CourseModel> courses,
-    
+    required List<CourseModel> coursesOfCategory,
+    required List<CourseModel> userEnrolledCourses,
+    required List<CourseModel> featuredCourses,
+    required List<CourseModel> freeCourses,
+    required List<CourseModel> popularCourses,
+    required List<CourseModel> trendingCourses,
+    required List<CourseModel> newCourses,
+    required List<CourseModel> allCourses,
     required CourseModel courseModel,
     required CourseModel selectedFeaturedCourse,
   }) = _ManageCourseState;
@@ -19,5 +27,14 @@ class ManageCourseState with _$ManageCourseState {
         courses: [],
         courseModel: CourseModel.empty(),
         selectedFeaturedCourse: CourseModel.empty(),
+        coursesOfCategory: [],
+        enrollCourseLoadingStatus: LoadingStatus.initial,
+        userEnrolledCourses: [],
+        featuredCourses: [],
+        freeCourses: [],
+        newCourses: [],
+        popularCourses: [],
+        trendingCourses: [],
+        allCourses: [],
       );
 }

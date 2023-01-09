@@ -1,3 +1,5 @@
+import 'package:business_mates/presentation/screens/homepage/my_course_page.dart';
+
 import 'homepage/profile_screen.dart';
 import '../widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart' hide BottomNavigationBar;
@@ -45,7 +47,7 @@ class _RootDashboardState extends State<RootDashboard> {
           physics: const NeverScrollableScrollPhysics(),
           pageSnapping: true,
           controller: _pageController,
-          children: [HomePage(), const ProfileScreen()],
+          children: const [HomePage(), MyCourseScreen(), ProfileScreen()],
         ),
         bottomNavigationBar: CustomBottomNavigationBar(
           initialIndex: widget.currentIndex,

@@ -243,31 +243,31 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
         appBar: AppBar(
           leading: Container(),
           title: const Text("PDF Content"),
-          actions: [
-            IconButton(
-              onPressed: () async {
-                print("this is file url $url");
-                final result = await saveFile(url, label);
-                Dio().downloadUri(
-                    Uri.parse(url), '/storage/emulated/0/Download/$label.pdf');
-                if (result) {
-                  // ignore: use_build_context_synchronously
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('File Downloaded'),
-                    ),
-                  );
-                } else {
-                  // ignore: use_build_context_synchronously
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('File Download Failed'),
-                    ),
-                  );
-                }
-              },
-              icon: const Icon(Icons.download_rounded),
-            ),
+          actions: const [
+            // IconButton(
+            //   onPressed: () async {
+            //     print("this is file url $url");
+            //     final result = await saveFile(url, label);
+            //     Dio().downloadUri(
+            //         Uri.parse(url), '/storage/emulated/0/Download/$label.pdf');
+            //     if (result) {
+            //       // ignore: use_build_context_synchronously
+            //       ScaffoldMessenger.of(context).showSnackBar(
+            //         const SnackBar(
+            //           content: Text('File Downloaded'),
+            //         ),
+            //       );
+            //     } else {
+            //       // ignore: use_build_context_synchronously
+            //       ScaffoldMessenger.of(context).showSnackBar(
+            //         const SnackBar(
+            //           content: Text('File Download Failed'),
+            //         ),
+            //       );
+            //     }
+            //   },
+            //   icon: const Icon(Icons.download_rounded),
+            // ),
           ],
         ),
         body: PDFView(

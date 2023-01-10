@@ -12,41 +12,61 @@ import '../../cubits/manage_categories/manage_categories_cubit.dart';
 import '../../widgets/bm_button.dart';
 import '../../widgets/bm_text_form_field.dart';
 
-class UpdateProfileScreen extends StatelessWidget {
+class UpdateProfileScreen extends StatefulWidget {
   static const String routeName = '/update_profile_screen';
-  UpdateProfileScreen({Key? key, this.userProfileModel}) : super(key: key);
+  const UpdateProfileScreen({Key? key, this.userProfileModel})
+      : super(key: key);
 
   final UserProfileModel? userProfileModel;
 
+  @override
+  State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
+}
+
+class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   // form key
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-// text controllers
 
+// text controllers
   final TextEditingController _profileNameController = TextEditingController();
+
   final TextEditingController _profileAddressController =
       TextEditingController();
+
   final TextEditingController _profileCityController = TextEditingController();
+
   final TextEditingController _profileCountryController =
       TextEditingController();
+
   final TextEditingController _profileImageUrlController =
       TextEditingController();
+
   final TextEditingController _profilePhoneController = TextEditingController();
+
   final TextEditingController _profileStateController = TextEditingController();
+
+  late final ManageProfileCubit manageProfileCubit;
+  late final ImageCubit imageCubit;
+
+  @override
+  void initState() {
+    manageProfileCubit = context.read<ManageProfileCubit>();
+    manageProfileCubit.setUserProfileModel(widget.userProfileModel!);
+    imageCubit = context.read<ImageCubit>();
+    _profileNameController.text = widget.userProfileModel?.name ?? '';
+
+    _profileAddressController.text = widget.userProfileModel?.address ?? '';
+    _profileCityController.text = widget.userProfileModel?.city ?? '';
+    _profileCountryController.text = widget.userProfileModel?.country ?? '';
+    _profileImageUrlController.text = widget.userProfileModel?.imageUrl ?? '';
+    _profilePhoneController.text = widget.userProfileModel?.phone ?? '';
+    _profileStateController.text = widget.userProfileModel?.state ?? '';
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    ManageProfileCubit manageProfileCubit = context.read<ManageProfileCubit>();
-    manageProfileCubit.setUserProfileModel(userProfileModel!);
-    ImageCubit imageCubit = context.read<ImageCubit>();
-    _profileNameController.text = userProfileModel?.name ?? '';
-
-    _profileAddressController.text = userProfileModel?.address ?? '';
-    _profileCityController.text = userProfileModel?.city ?? '';
-    _profileCountryController.text = userProfileModel?.country ?? '';
-    _profileImageUrlController.text = userProfileModel?.imageUrl ?? '';
-    _profilePhoneController.text = userProfileModel?.phone ?? '';
-    _profileStateController.text = userProfileModel?.state ?? '';
-
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: FloatingActionButton(
@@ -97,8 +117,8 @@ class UpdateProfileScreen extends StatelessWidget {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           image: NetworkImage(
-                            userProfileModel!.imageUrl.isNotEmpty
-                                ? userProfileModel!.imageUrl
+                            widget.userProfileModel!.imageUrl.isNotEmpty
+                                ? widget.userProfileModel!.imageUrl
                                 : Constants.placeholderImage,
                           ),
                           fit: BoxFit.cover,
@@ -197,7 +217,7 @@ class UpdateProfileScreen extends StatelessWidget {
                           Navigator.of(context).pop();
                           myToast(
                             context: context,
-                            widget: Text(userProfileModel != null
+                            widget: Text(widget.userProfileModel != null
                                 ? "Profile Updated Successfully"
                                 : 'Profile Created Successfully'),
                           );
@@ -240,7 +260,7 @@ class UpdateProfileScreen extends StatelessWidget {
                         return BMButton(
                           isLoading: state.manageProfileLoadingStatus ==
                               LoadingStatus.loading,
-                          text: userProfileModel != null
+                          text: widget.userProfileModel != null
                               ? 'Update Profile'
                               : 'Create Profile',
                           color: Theme.of(context).colorScheme.onPrimary,
@@ -250,7 +270,7 @@ class UpdateProfileScreen extends StatelessWidget {
                             // validate form
                             if (_formKey.currentState!.validate()) {
                               // if the form is valid
-                              if (userProfileModel != null) {
+                              if (widget.userProfileModel != null) {
                                 manageProfileCubit.updateProfile(
                                   userProfileModel:
                                       state.userProfileModel.copyWith(
@@ -261,7 +281,7 @@ class UpdateProfileScreen extends StatelessWidget {
                                     city: _profileCityController.text,
                                     state: _profileStateController.text,
                                     country: _profileCountryController.text,
-                                    email: userProfileModel!.email,
+                                    email: widget.userProfileModel!.email,
                                   ),
                                 );
                               }

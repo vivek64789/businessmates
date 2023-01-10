@@ -200,11 +200,12 @@ class _ReadCourseContentScreenState extends State<ReadCourseContentScreen>
                     const SizedBox(
                       height: 16,
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.6,
-                      child: PdfViewerScreen(
-                          url: lesson.documentUrl, label: lesson.name),
-                    ),
+                    if (lesson.documentUrl.isNotEmpty)
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.6,
+                        child: PdfViewerScreen(
+                            url: lesson.documentUrl, label: lesson.name),
+                      ),
                     // lesson.documentUrl.isNotEmpty
                     //     ? TextButton(
                     //         onPressed: () {

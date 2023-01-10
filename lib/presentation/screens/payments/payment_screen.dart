@@ -151,6 +151,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   );
                 },
               ),
+              BMButton(
+                onPressed: () {
+                  //create ui to confirm logout with modal bottom sheet
+
+                  context.read<AuthCubit>().signOut();
+                  context.router.replaceAll([const LoginScreenRoute()]);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Logged out'),
+                    ),
+                  );
+                },
+                text: "Logout",
+                color: Colors.red,
+              ),
             ]),
       ),
     );

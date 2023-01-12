@@ -11,13 +11,15 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i16;
-import 'package:flutter/material.dart' as _i17;
+import 'package:auto_route/auto_route.dart' as _i17;
+import 'package:flutter/material.dart' as _i18;
 
-import 'data/models/course/course_model.dart' as _i18;
-import 'data/models/course/course_section_model.dart' as _i20;
-import 'data/models/course_categories_model.dart' as _i21;
-import 'data/models/user_profile_model.dart' as _i19;
+import 'data/models/course/course_model.dart' as _i19;
+import 'data/models/course/course_section_model.dart' as _i21;
+import 'data/models/course_categories_model.dart' as _i22;
+import 'data/models/user_profile_model.dart' as _i20;
+import 'presentation/screens/authentication/forgot_password_screen.dart'
+    as _i16;
 import 'presentation/screens/authentication/login_screen.dart' as _i3;
 import 'presentation/screens/authentication/register_screen.dart' as _i2;
 import 'presentation/screens/authentication/verify_otp_screen.dart' as _i4;
@@ -35,45 +37,45 @@ import 'presentation/screens/payments/payment_screen.dart' as _i15;
 import 'presentation/screens/root_dashboard.dart' as _i6;
 import 'presentation/screens/splash_screen.dart' as _i1;
 
-class AppRouter extends _i16.RootStackRouter {
-  AppRouter([_i17.GlobalKey<_i17.NavigatorState>? navigatorKey])
+class AppRouter extends _i17.RootStackRouter {
+  AppRouter([_i18.GlobalKey<_i18.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i16.PageFactory> pagesMap = {
+  final Map<String, _i17.PageFactory> pagesMap = {
     SplashScreenRoute.name: (routeData) {
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.SplashScreen(),
       );
     },
     RegisterScreenRoute.name: (routeData) {
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.RegisterScreen(),
       );
     },
     LoginScreenRoute.name: (routeData) {
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i3.LoginScreen(),
       );
     },
     VerifyOTPScreenRoute.name: (routeData) {
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i4.VerifyOTPScreen(),
       );
     },
     HomePageRoute.name: (routeData) {
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i5.HomePage(),
       );
     },
     RootDashboardRoute.name: (routeData) {
       final args = routeData.argsAs<RootDashboardRouteArgs>();
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i6.RootDashboard(
           key: args.key,
@@ -83,7 +85,7 @@ class AppRouter extends _i16.RootStackRouter {
     },
     CourseInfoScreenRoute.name: (routeData) {
       final args = routeData.argsAs<CourseInfoScreenRouteArgs>();
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i7.CourseInfoScreen(
           key: args.key,
@@ -92,13 +94,13 @@ class AppRouter extends _i16.RootStackRouter {
       );
     },
     IntroductionAnimationScreenRoute.name: (routeData) {
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i8.IntroductionAnimationScreen(),
       );
     },
     ProfileScreenRoute.name: (routeData) {
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i9.ProfileScreen(),
       );
@@ -106,7 +108,7 @@ class AppRouter extends _i16.RootStackRouter {
     UpdateProfileScreenRoute.name: (routeData) {
       final args = routeData.argsAs<UpdateProfileScreenRouteArgs>(
           orElse: () => const UpdateProfileScreenRouteArgs());
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i10.UpdateProfileScreen(
           key: args.key,
@@ -116,7 +118,7 @@ class AppRouter extends _i16.RootStackRouter {
     },
     ViewCourseContentScreenRoute.name: (routeData) {
       final args = routeData.argsAs<ViewCourseContentScreenRouteArgs>();
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i11.ViewCourseContentScreen(
           key: args.key,
@@ -126,7 +128,7 @@ class AppRouter extends _i16.RootStackRouter {
     },
     ReadCourseContentScreenRoute.name: (routeData) {
       final args = routeData.argsAs<ReadCourseContentScreenRouteArgs>();
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i12.ReadCourseContentScreen(
           key: args.key,
@@ -136,7 +138,7 @@ class AppRouter extends _i16.RootStackRouter {
     },
     PdfViewerScreenRoute.name: (routeData) {
       final args = routeData.argsAs<PdfViewerScreenRouteArgs>();
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i13.PdfViewerScreen(
           key: args.key,
@@ -147,7 +149,7 @@ class AppRouter extends _i16.RootStackRouter {
     },
     SingleCategoryScreenRoute.name: (routeData) {
       final args = routeData.argsAs<SingleCategoryScreenRouteArgs>();
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i14.SingleCategoryScreen(
           key: args.key,
@@ -156,13 +158,19 @@ class AppRouter extends _i16.RootStackRouter {
       );
     },
     PaymentScreenRoute.name: (routeData) {
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i15.PaymentScreen(),
       );
     },
+    ForgotPasswordScreenRoute.name: (routeData) {
+      return _i17.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i16.ForgotPasswordScreen(),
+      );
+    },
     SplashScreen.name: (routeData) {
-      return _i16.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.SplashScreen(),
       );
@@ -170,68 +178,72 @@ class AppRouter extends _i16.RootStackRouter {
   };
 
   @override
-  List<_i16.RouteConfig> get routes => [
-        _i16.RouteConfig(
+  List<_i17.RouteConfig> get routes => [
+        _i17.RouteConfig(
           SplashScreenRoute.name,
           path: '/splash-screen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           RegisterScreenRoute.name,
           path: '/register-screen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           LoginScreenRoute.name,
           path: '/login-screen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           VerifyOTPScreenRoute.name,
           path: '/verify-otp-screen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           HomePageRoute.name,
           path: '/homepage',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           RootDashboardRoute.name,
           path: '/Rootdashboard',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           CourseInfoScreenRoute.name,
           path: '/course-info',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           IntroductionAnimationScreenRoute.name,
           path: '/introduction-animation-screen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           ProfileScreenRoute.name,
           path: '/ProfileScreen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           UpdateProfileScreenRoute.name,
           path: '/update_profile_screen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           ViewCourseContentScreenRoute.name,
           path: '/view_course_content_screen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           ReadCourseContentScreenRoute.name,
           path: '/read_course_content_screen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           PdfViewerScreenRoute.name,
           path: '/PdfViewerScreen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           SingleCategoryScreenRoute.name,
           path: '/single_category_screen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
           PaymentScreenRoute.name,
           path: 'payment_screen',
         ),
-        _i16.RouteConfig(
+        _i17.RouteConfig(
+          ForgotPasswordScreenRoute.name,
+          path: '/forgot-password-screen',
+        ),
+        _i17.RouteConfig(
           SplashScreen.name,
           path: '/',
         ),
@@ -240,7 +252,7 @@ class AppRouter extends _i16.RootStackRouter {
 
 /// generated route for
 /// [_i1.SplashScreen]
-class SplashScreenRoute extends _i16.PageRouteInfo<void> {
+class SplashScreenRoute extends _i17.PageRouteInfo<void> {
   const SplashScreenRoute()
       : super(
           SplashScreenRoute.name,
@@ -252,7 +264,7 @@ class SplashScreenRoute extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.RegisterScreen]
-class RegisterScreenRoute extends _i16.PageRouteInfo<void> {
+class RegisterScreenRoute extends _i17.PageRouteInfo<void> {
   const RegisterScreenRoute()
       : super(
           RegisterScreenRoute.name,
@@ -264,7 +276,7 @@ class RegisterScreenRoute extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.LoginScreen]
-class LoginScreenRoute extends _i16.PageRouteInfo<void> {
+class LoginScreenRoute extends _i17.PageRouteInfo<void> {
   const LoginScreenRoute()
       : super(
           LoginScreenRoute.name,
@@ -276,7 +288,7 @@ class LoginScreenRoute extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.VerifyOTPScreen]
-class VerifyOTPScreenRoute extends _i16.PageRouteInfo<void> {
+class VerifyOTPScreenRoute extends _i17.PageRouteInfo<void> {
   const VerifyOTPScreenRoute()
       : super(
           VerifyOTPScreenRoute.name,
@@ -288,7 +300,7 @@ class VerifyOTPScreenRoute extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.HomePage]
-class HomePageRoute extends _i16.PageRouteInfo<void> {
+class HomePageRoute extends _i17.PageRouteInfo<void> {
   const HomePageRoute()
       : super(
           HomePageRoute.name,
@@ -300,9 +312,9 @@ class HomePageRoute extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.RootDashboard]
-class RootDashboardRoute extends _i16.PageRouteInfo<RootDashboardRouteArgs> {
+class RootDashboardRoute extends _i17.PageRouteInfo<RootDashboardRouteArgs> {
   RootDashboardRoute({
-    _i17.Key? key,
+    _i18.Key? key,
     required int currentIndex,
   }) : super(
           RootDashboardRoute.name,
@@ -322,7 +334,7 @@ class RootDashboardRouteArgs {
     required this.currentIndex,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
   final int currentIndex;
 
@@ -335,10 +347,10 @@ class RootDashboardRouteArgs {
 /// generated route for
 /// [_i7.CourseInfoScreen]
 class CourseInfoScreenRoute
-    extends _i16.PageRouteInfo<CourseInfoScreenRouteArgs> {
+    extends _i17.PageRouteInfo<CourseInfoScreenRouteArgs> {
   CourseInfoScreenRoute({
-    _i17.Key? key,
-    required _i18.CourseModel course,
+    _i18.Key? key,
+    required _i19.CourseModel course,
   }) : super(
           CourseInfoScreenRoute.name,
           path: '/course-info',
@@ -357,9 +369,9 @@ class CourseInfoScreenRouteArgs {
     required this.course,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
-  final _i18.CourseModel course;
+  final _i19.CourseModel course;
 
   @override
   String toString() {
@@ -369,7 +381,7 @@ class CourseInfoScreenRouteArgs {
 
 /// generated route for
 /// [_i8.IntroductionAnimationScreen]
-class IntroductionAnimationScreenRoute extends _i16.PageRouteInfo<void> {
+class IntroductionAnimationScreenRoute extends _i17.PageRouteInfo<void> {
   const IntroductionAnimationScreenRoute()
       : super(
           IntroductionAnimationScreenRoute.name,
@@ -381,7 +393,7 @@ class IntroductionAnimationScreenRoute extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i9.ProfileScreen]
-class ProfileScreenRoute extends _i16.PageRouteInfo<void> {
+class ProfileScreenRoute extends _i17.PageRouteInfo<void> {
   const ProfileScreenRoute()
       : super(
           ProfileScreenRoute.name,
@@ -394,10 +406,10 @@ class ProfileScreenRoute extends _i16.PageRouteInfo<void> {
 /// generated route for
 /// [_i10.UpdateProfileScreen]
 class UpdateProfileScreenRoute
-    extends _i16.PageRouteInfo<UpdateProfileScreenRouteArgs> {
+    extends _i17.PageRouteInfo<UpdateProfileScreenRouteArgs> {
   UpdateProfileScreenRoute({
-    _i17.Key? key,
-    _i19.UserProfileModel? userProfileModel,
+    _i18.Key? key,
+    _i20.UserProfileModel? userProfileModel,
   }) : super(
           UpdateProfileScreenRoute.name,
           path: '/update_profile_screen',
@@ -416,9 +428,9 @@ class UpdateProfileScreenRouteArgs {
     this.userProfileModel,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
-  final _i19.UserProfileModel? userProfileModel;
+  final _i20.UserProfileModel? userProfileModel;
 
   @override
   String toString() {
@@ -429,10 +441,10 @@ class UpdateProfileScreenRouteArgs {
 /// generated route for
 /// [_i11.ViewCourseContentScreen]
 class ViewCourseContentScreenRoute
-    extends _i16.PageRouteInfo<ViewCourseContentScreenRouteArgs> {
+    extends _i17.PageRouteInfo<ViewCourseContentScreenRouteArgs> {
   ViewCourseContentScreenRoute({
-    _i17.Key? key,
-    required List<_i20.CourseSectionModel> sections,
+    _i18.Key? key,
+    required List<_i21.CourseSectionModel> sections,
   }) : super(
           ViewCourseContentScreenRoute.name,
           path: '/view_course_content_screen',
@@ -451,9 +463,9 @@ class ViewCourseContentScreenRouteArgs {
     required this.sections,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
-  final List<_i20.CourseSectionModel> sections;
+  final List<_i21.CourseSectionModel> sections;
 
   @override
   String toString() {
@@ -464,10 +476,10 @@ class ViewCourseContentScreenRouteArgs {
 /// generated route for
 /// [_i12.ReadCourseContentScreen]
 class ReadCourseContentScreenRoute
-    extends _i16.PageRouteInfo<ReadCourseContentScreenRouteArgs> {
+    extends _i17.PageRouteInfo<ReadCourseContentScreenRouteArgs> {
   ReadCourseContentScreenRoute({
-    _i17.Key? key,
-    required _i18.CourseModel course,
+    _i18.Key? key,
+    required _i19.CourseModel course,
   }) : super(
           ReadCourseContentScreenRoute.name,
           path: '/read_course_content_screen',
@@ -486,9 +498,9 @@ class ReadCourseContentScreenRouteArgs {
     required this.course,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
-  final _i18.CourseModel course;
+  final _i19.CourseModel course;
 
   @override
   String toString() {
@@ -499,9 +511,9 @@ class ReadCourseContentScreenRouteArgs {
 /// generated route for
 /// [_i13.PdfViewerScreen]
 class PdfViewerScreenRoute
-    extends _i16.PageRouteInfo<PdfViewerScreenRouteArgs> {
+    extends _i17.PageRouteInfo<PdfViewerScreenRouteArgs> {
   PdfViewerScreenRoute({
-    _i17.Key? key,
+    _i18.Key? key,
     required String url,
     required String label,
   }) : super(
@@ -524,7 +536,7 @@ class PdfViewerScreenRouteArgs {
     required this.label,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
   final String url;
 
@@ -539,10 +551,10 @@ class PdfViewerScreenRouteArgs {
 /// generated route for
 /// [_i14.SingleCategoryScreen]
 class SingleCategoryScreenRoute
-    extends _i16.PageRouteInfo<SingleCategoryScreenRouteArgs> {
+    extends _i17.PageRouteInfo<SingleCategoryScreenRouteArgs> {
   SingleCategoryScreenRoute({
-    _i17.Key? key,
-    required _i21.CategoriesModel category,
+    _i18.Key? key,
+    required _i22.CategoriesModel category,
   }) : super(
           SingleCategoryScreenRoute.name,
           path: '/single_category_screen',
@@ -561,9 +573,9 @@ class SingleCategoryScreenRouteArgs {
     required this.category,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
-  final _i21.CategoriesModel category;
+  final _i22.CategoriesModel category;
 
   @override
   String toString() {
@@ -573,7 +585,7 @@ class SingleCategoryScreenRouteArgs {
 
 /// generated route for
 /// [_i15.PaymentScreen]
-class PaymentScreenRoute extends _i16.PageRouteInfo<void> {
+class PaymentScreenRoute extends _i17.PageRouteInfo<void> {
   const PaymentScreenRoute()
       : super(
           PaymentScreenRoute.name,
@@ -584,8 +596,20 @@ class PaymentScreenRoute extends _i16.PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [_i16.ForgotPasswordScreen]
+class ForgotPasswordScreenRoute extends _i17.PageRouteInfo<void> {
+  const ForgotPasswordScreenRoute()
+      : super(
+          ForgotPasswordScreenRoute.name,
+          path: '/forgot-password-screen',
+        );
+
+  static const String name = 'ForgotPasswordScreenRoute';
+}
+
+/// generated route for
 /// [_i1.SplashScreen]
-class SplashScreen extends _i16.PageRouteInfo<void> {
+class SplashScreen extends _i17.PageRouteInfo<void> {
   const SplashScreen()
       : super(
           SplashScreen.name,

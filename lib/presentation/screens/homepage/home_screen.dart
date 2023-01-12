@@ -360,16 +360,16 @@ class _HomePageState extends State<HomePage> {
                 )),
           ),
           _buildFeaturedCourses(),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-            child: Text("Free Courses",
-                style: TextStyle(
-                  color: textColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 24,
-                )),
-          ),
-          _buildFreeCourses(),
+          // const Padding(
+          //   padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+          //   child: Text("Free Courses",
+          //       style: TextStyle(
+          //         color: textColor,
+          //         fontWeight: FontWeight.w600,
+          //         fontSize: 24,
+          //       )),
+          // ),
+          // _buildFreeCourses(),
           const Padding(
             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
             child: Text("New Courses",

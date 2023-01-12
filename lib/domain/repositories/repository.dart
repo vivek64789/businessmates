@@ -41,6 +41,8 @@ abstract class Repository {
 
   // eend email verification
   Future<Either<AuthFailure, void>> sendEmailVerification();
+  Future<Either<AuthFailure, void>> sendResetPasswordLink(
+      {required String email});
 
   Stream<List<CategoriesModel>> streamAllCourseCategories();
 

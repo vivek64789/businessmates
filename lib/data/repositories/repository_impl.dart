@@ -311,4 +311,14 @@ class RepositoryImpl implements Repository {
       return left(const ManageCourseFailure.noInternetConnection());
     }
   }
+
+  @override
+  Future<Either<AuthFailure, void>> sendResetPasswordLink(
+      {required String email}) async {
+    if (await networkInfo.isConnected) {
+      return remoteDataSource.sendResetPasswordLink(email: email );
+    } else {
+      return left(const AuthFailure.noInternetConnection());
+    }
+  }
 }

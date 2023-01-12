@@ -1,4 +1,3 @@
-import 'package:business_mates/presentation/cubits/manage_profile/manage_profile_cubit.dart';
 import 'package:business_mates/presentation/screens/payments/payment_screen.dart';
 
 import 'authentication/login_screen.dart';
@@ -27,11 +26,18 @@ class _SplashScreenState extends State<SplashScreen> {
     if (context.read<AuthCubit>().state.currentLoggedInUser != null) {
       context.read<AuthCubit>().getUserProfile(
           uid: context.read<AuthCubit>().state.currentLoggedInUser!.uid);
-      context.read<ManageProfileCubit>().getUserProfile(
-          uid: context.read<AuthCubit>().state.currentLoggedInUser!.uid);
     }
 
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (context.watch<AuthCubit>().state.currentLoggedInUser != null) {
+      context.watch<AuthCubit>().getUserProfile(
+          uid: context.watch<AuthCubit>().state.currentLoggedInUser!.uid);
+    }
+    super.didChangeDependencies();
   }
 
   @override

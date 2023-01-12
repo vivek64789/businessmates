@@ -86,6 +86,10 @@ class AuthCubit extends Cubit<AuthState> {
     return firebaseAuth.currentUser;
   }
 
+  Future<void> sendResetPasswordLink({required String email}) async {
+    await _repository.sendResetPasswordLink(email: email);
+  }
+
   Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
@@ -154,7 +158,24 @@ class AuthCubit extends Cubit<AuthState> {
 
   // forgot password
   Future<void> sendPasswordResetEmail({required String email}) async {
-    await _repository.sendPasswordResetEmail(email: email);
+    emit(state.copyWith(
+      sendResetPasswordLinkLoadingStatus: LoadingStatus.loading,
+      failureMessageOption: none(),
+    ));
+    final value = await _repository.sendPasswordResetEmail(email: email);
+    value.fold(
+      (l) => emit(
+        state.copyWith(
+          failureMessageOption: some(l),
+          sendResetPasswordLinkLoadingStatus: LoadingStatus.error,
+        ),
+      ),
+      (r) => emit(
+        state.copyWith(
+          sendResetPasswordLinkLoadingStatus: LoadingStatus.loaded,
+        ),
+      ),
+    );
   }
 
   // change password

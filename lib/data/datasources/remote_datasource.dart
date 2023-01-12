@@ -43,6 +43,8 @@ abstract class RemoteDataSource {
 
   // send otp to email for verification
   Future<Either<AuthFailure, Unit>> sendEmailVerification();
+  Future<Either<AuthFailure, Unit>> sendResetPasswordLink(
+      {required String email});
 
   // profile sources
   // get user profile
@@ -1114,6 +1116,21 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       return const Left(
         ManageCourseFailure.serverError(message: "Something went wrong"),
       );
+    }
+  }
+
+  @override
+  Future<Either<AuthFailure, Unit>> sendResetPasswordLink(
+      {required String email}) async {
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+      return right(unit);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return left(const AuthFailure.userNotFound());
+      } else {
+        return left(const AuthFailure.serverError());
+      }
     }
   }
   //

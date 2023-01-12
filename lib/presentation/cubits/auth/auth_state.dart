@@ -16,6 +16,7 @@ class AuthState with _$AuthState {
     required LoadingStatus loginLoadingStatus,
     required LoadingStatus registerLoadingStatus,
     required LoadingStatus verifyOTPLoadingStatus,
+    required LoadingStatus sendResetPasswordLinkLoadingStatus,
     required UserProfileModel userProfileModel,
   }) = _AuthState;
 
@@ -34,5 +35,6 @@ class AuthState with _$AuthState {
         registerLoadingStatus: LoadingStatus.initial,
         verifyOTPLoadingStatus: LoadingStatus.initial,
         userProfileModel: UserProfileModel.empty(),
+        sendResetPasswordLinkLoadingStatus: LoadingStatus.initial,
       );
 }

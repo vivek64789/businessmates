@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:business_mates/presentation/screens/authentication/login_screen.dart';
 import '../../../core/design/app_icons.dart';
 import '../../../core/utils/validation_helper.dart';
 import '../../cubits/auth/auth_cubit.dart';
@@ -8,7 +9,6 @@ import '../../widgets/bm_text_form_field.dart';
 import '../../../routes.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../core/utils/constants.dart';
 import '../../cubits/manage_categories/manage_categories_cubit.dart';
@@ -53,13 +53,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   const SizedBox(
                     height: Constants.formFieldBetweenSpacing,
                   ),
-                  SizedBox(
-                    height: 200,
-                    child: SvgPicture.asset(
-                      "assets/images/login.svg",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                  const LogoWidget(height: 150),
 
                   // Email form field
                   Container(

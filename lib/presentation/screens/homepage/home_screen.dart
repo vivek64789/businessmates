@@ -17,6 +17,7 @@ import 'package:lottie/lottie.dart';
 import '../../../core/theme/color.dart';
 import '../../../core/utils/data.dart';
 import '../../../routes.gr.dart';
+import '../authentication/login_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -277,6 +278,7 @@ class _HomePageState extends State<HomePage> {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
+              centerTitle: true,
               backgroundColor: appBarColor,
               pinned: true,
               snap: true,
@@ -313,12 +315,15 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 5,
               ),
-              const Text("Good Morning!",
-                  style: TextStyle(
-                    color: textColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LogoWidget(height: MediaQuery.of(context).size.height * 0.06),
+                  const Text(
+                    "Business Mates",
+                  ),
+                ],
+              ),
             ],
           )),
           // NotificationBox(

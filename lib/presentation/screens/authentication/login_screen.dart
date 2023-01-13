@@ -11,7 +11,6 @@ import '../../widgets/bm_text_form_field.dart';
 import '../../../routes.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../core/utils/constants.dart';
 import '../../cubits/manage_categories/manage_categories_cubit.dart';
@@ -62,13 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: Constants.formFieldBetweenSpacing,
                   ),
-                  SizedBox(
-                    height: 200,
-                    child: SvgPicture.asset(
-                      "assets/images/login.svg",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                  const LogoWidget(height: 150),
 
                   // Email form field
                   Container(
@@ -101,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       obscureText: isHidden,
                       suffixIcon: IconButton(
                         icon: Icon(
-                          isHidden ? BMIcon.eye : BMIcon.eye_slash,
+                          !isHidden ? BMIcon.eye : BMIcon.eye_slash,
                           color: Theme.of(context).colorScheme.onBackground,
                         ),
                         onPressed: () {
@@ -216,6 +209,27 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LogoWidget extends StatelessWidget {
+  const LogoWidget({
+    Key? key,
+    required this.height,
+  }) : super(key: key);
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(paddingHorizontal),
+      height: height,
+      child: Image.asset(
+        Constants.logo,
+        fit: BoxFit.contain,
       ),
     );
   }

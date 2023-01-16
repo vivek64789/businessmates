@@ -33,6 +33,10 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   LoadingStatus get sendResetPasswordLinkLoadingStatus =>
       throw _privateConstructorUsedError;
+  LoadingStatus get getUserProfileLoadingStatus =>
+      throw _privateConstructorUsedError;
+  LoadingStatus get getCurrentUserLoadingStatus =>
+      throw _privateConstructorUsedError;
   UserProfileModel get userProfileModel => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -60,6 +64,8 @@ abstract class $AuthStateCopyWith<$Res> {
       LoadingStatus registerLoadingStatus,
       LoadingStatus verifyOTPLoadingStatus,
       LoadingStatus sendResetPasswordLinkLoadingStatus,
+      LoadingStatus getUserProfileLoadingStatus,
+      LoadingStatus getCurrentUserLoadingStatus,
       UserProfileModel userProfileModel});
 
   $AuthUserModelCopyWith<$Res> get userModel;
@@ -93,6 +99,8 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
     Object? registerLoadingStatus = null,
     Object? verifyOTPLoadingStatus = null,
     Object? sendResetPasswordLinkLoadingStatus = null,
+    Object? getUserProfileLoadingStatus = null,
+    Object? getCurrentUserLoadingStatus = null,
     Object? userProfileModel = null,
   }) {
     return _then(_value.copyWith(
@@ -153,6 +161,14 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
           ? _value.sendResetPasswordLinkLoadingStatus
           : sendResetPasswordLinkLoadingStatus // ignore: cast_nullable_to_non_nullable
               as LoadingStatus,
+      getUserProfileLoadingStatus: null == getUserProfileLoadingStatus
+          ? _value.getUserProfileLoadingStatus
+          : getUserProfileLoadingStatus // ignore: cast_nullable_to_non_nullable
+              as LoadingStatus,
+      getCurrentUserLoadingStatus: null == getCurrentUserLoadingStatus
+          ? _value.getCurrentUserLoadingStatus
+          : getCurrentUserLoadingStatus // ignore: cast_nullable_to_non_nullable
+              as LoadingStatus,
       userProfileModel: null == userProfileModel
           ? _value.userProfileModel
           : userProfileModel // ignore: cast_nullable_to_non_nullable
@@ -199,6 +215,8 @@ abstract class _$$_AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
       LoadingStatus registerLoadingStatus,
       LoadingStatus verifyOTPLoadingStatus,
       LoadingStatus sendResetPasswordLinkLoadingStatus,
+      LoadingStatus getUserProfileLoadingStatus,
+      LoadingStatus getCurrentUserLoadingStatus,
       UserProfileModel userProfileModel});
 
   @override
@@ -232,6 +250,8 @@ class __$$_AuthStateCopyWithImpl<$Res>
     Object? registerLoadingStatus = null,
     Object? verifyOTPLoadingStatus = null,
     Object? sendResetPasswordLinkLoadingStatus = null,
+    Object? getUserProfileLoadingStatus = null,
+    Object? getCurrentUserLoadingStatus = null,
     Object? userProfileModel = null,
   }) {
     return _then(_$_AuthState(
@@ -292,6 +312,14 @@ class __$$_AuthStateCopyWithImpl<$Res>
           ? _value.sendResetPasswordLinkLoadingStatus
           : sendResetPasswordLinkLoadingStatus // ignore: cast_nullable_to_non_nullable
               as LoadingStatus,
+      getUserProfileLoadingStatus: null == getUserProfileLoadingStatus
+          ? _value.getUserProfileLoadingStatus
+          : getUserProfileLoadingStatus // ignore: cast_nullable_to_non_nullable
+              as LoadingStatus,
+      getCurrentUserLoadingStatus: null == getCurrentUserLoadingStatus
+          ? _value.getCurrentUserLoadingStatus
+          : getCurrentUserLoadingStatus // ignore: cast_nullable_to_non_nullable
+              as LoadingStatus,
       userProfileModel: null == userProfileModel
           ? _value.userProfileModel
           : userProfileModel // ignore: cast_nullable_to_non_nullable
@@ -318,6 +346,8 @@ class _$_AuthState implements _AuthState {
       required this.registerLoadingStatus,
       required this.verifyOTPLoadingStatus,
       required this.sendResetPasswordLinkLoadingStatus,
+      required this.getUserProfileLoadingStatus,
+      required this.getCurrentUserLoadingStatus,
       required this.userProfileModel});
 
   @override
@@ -349,11 +379,15 @@ class _$_AuthState implements _AuthState {
   @override
   final LoadingStatus sendResetPasswordLinkLoadingStatus;
   @override
+  final LoadingStatus getUserProfileLoadingStatus;
+  @override
+  final LoadingStatus getCurrentUserLoadingStatus;
+  @override
   final UserProfileModel userProfileModel;
 
   @override
   String toString() {
-    return 'AuthState(isInProgress: $isInProgress, isAppFirstTime: $isAppFirstTime, isAppFirstTimeChecking: $isAppFirstTimeChecking, userModel: $userModel, isUserLoggedIn: $isUserLoggedIn, currentLoggedInUser: $currentLoggedInUser, emailCode: $emailCode, verificationIdOption: $verificationIdOption, failureMessageOption: $failureMessageOption, isCodeSent: $isCodeSent, loginLoadingStatus: $loginLoadingStatus, registerLoadingStatus: $registerLoadingStatus, verifyOTPLoadingStatus: $verifyOTPLoadingStatus, sendResetPasswordLinkLoadingStatus: $sendResetPasswordLinkLoadingStatus, userProfileModel: $userProfileModel)';
+    return 'AuthState(isInProgress: $isInProgress, isAppFirstTime: $isAppFirstTime, isAppFirstTimeChecking: $isAppFirstTimeChecking, userModel: $userModel, isUserLoggedIn: $isUserLoggedIn, currentLoggedInUser: $currentLoggedInUser, emailCode: $emailCode, verificationIdOption: $verificationIdOption, failureMessageOption: $failureMessageOption, isCodeSent: $isCodeSent, loginLoadingStatus: $loginLoadingStatus, registerLoadingStatus: $registerLoadingStatus, verifyOTPLoadingStatus: $verifyOTPLoadingStatus, sendResetPasswordLinkLoadingStatus: $sendResetPasswordLinkLoadingStatus, getUserProfileLoadingStatus: $getUserProfileLoadingStatus, getCurrentUserLoadingStatus: $getCurrentUserLoadingStatus, userProfileModel: $userProfileModel)';
   }
 
   @override
@@ -391,6 +425,14 @@ class _$_AuthState implements _AuthState {
                     sendResetPasswordLinkLoadingStatus) ||
                 other.sendResetPasswordLinkLoadingStatus ==
                     sendResetPasswordLinkLoadingStatus) &&
+            (identical(other.getUserProfileLoadingStatus,
+                    getUserProfileLoadingStatus) ||
+                other.getUserProfileLoadingStatus ==
+                    getUserProfileLoadingStatus) &&
+            (identical(other.getCurrentUserLoadingStatus,
+                    getCurrentUserLoadingStatus) ||
+                other.getCurrentUserLoadingStatus ==
+                    getCurrentUserLoadingStatus) &&
             (identical(other.userProfileModel, userProfileModel) ||
                 other.userProfileModel == userProfileModel));
   }
@@ -412,6 +454,8 @@ class _$_AuthState implements _AuthState {
       registerLoadingStatus,
       verifyOTPLoadingStatus,
       sendResetPasswordLinkLoadingStatus,
+      getUserProfileLoadingStatus,
+      getCurrentUserLoadingStatus,
       userProfileModel);
 
   @JsonKey(ignore: true)
@@ -437,6 +481,8 @@ abstract class _AuthState implements AuthState {
       required final LoadingStatus registerLoadingStatus,
       required final LoadingStatus verifyOTPLoadingStatus,
       required final LoadingStatus sendResetPasswordLinkLoadingStatus,
+      required final LoadingStatus getUserProfileLoadingStatus,
+      required final LoadingStatus getCurrentUserLoadingStatus,
       required final UserProfileModel userProfileModel}) = _$_AuthState;
 
   @override
@@ -467,6 +513,10 @@ abstract class _AuthState implements AuthState {
   LoadingStatus get verifyOTPLoadingStatus;
   @override
   LoadingStatus get sendResetPasswordLinkLoadingStatus;
+  @override
+  LoadingStatus get getUserProfileLoadingStatus;
+  @override
+  LoadingStatus get getCurrentUserLoadingStatus;
   @override
   UserProfileModel get userProfileModel;
   @override

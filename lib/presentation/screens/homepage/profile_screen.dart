@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:business_mates/presentation/screens/homepage/about_us_screen.dart';
 import '../../../core/design/app_icons.dart';
 import '../../../core/helpers/my_shimmer.dart';
 import '../../../data/models/user_profile_model.dart';
@@ -173,6 +174,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 icon: BMIcon.map_marker,
                                 label: "Country",
                                 title: snapshot.data!.country),
+                            InkWell(
+                              onTap: () {
+                                context.router.pushNamed(
+                                  AboutUsScreen.routeName,
+                                );
+                              },
+                              child: const ProfileTileWidget(
+                                  icon: BMIcon.users_three, title: "About us"),
+                            ),
                           ],
                         ),
                       ),
@@ -209,12 +219,12 @@ class ProfileTileWidget extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.title,
-    required this.label,
+    this.label,
   }) : super(key: key);
 
   final IconData icon;
   final String title;
-  final String label;
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
@@ -246,10 +256,12 @@ class ProfileTileWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                label,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
+              label != null
+                  ? Text(
+                      label!,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    )
+                  : Container(),
               Text(
                 title,
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(

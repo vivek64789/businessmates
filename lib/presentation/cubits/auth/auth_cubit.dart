@@ -76,13 +76,20 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<User?> getCurrentUser() async {
-    emit(state.copyWith(isInProgress: true));
+    emit(state.copyWith(
+        isInProgress: true,
+        getCurrentUserLoadingStatus: LoadingStatus.loading));
     try {
       await firebaseAuth.currentUser?.reload();
+      emit(state.copyWith(
+          isInProgress: false,
+          getCurrentUserLoadingStatus: LoadingStatus.loaded));
     } catch (e) {
-      print(e);
+      emit(state.copyWith(
+          isInProgress: false,
+          getCurrentUserLoadingStatus: LoadingStatus.error));
     }
-    emit(state.copyWith(isInProgress: false));
+
     return firebaseAuth.currentUser;
   }
 
@@ -205,17 +212,39 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
+  
+
   // get user profile
 
-  Future<void> getUserProfile({required String uid}) async {
-    final failureOrProfile = await _repository.getUserProfile(uid: uid);
-    failureOrProfile.fold(
-      (l) => emit(state.copyWith()),
-      (r) => emit(
-        state.copyWith(
-          userProfileModel: r,
-        ),
-      ),
-    );
+  Future<void> getUserProfile() async {
+    emit(state.copyWith(
+        getCurrentUserLoadingStatus: LoadingStatus.loading,
+        getUserProfileLoadingStatus: LoadingStatus.loading));
+
+    if (firebaseAuth.currentUser != null) {
+      firebaseAuth.currentUser!.reload().then((_) async {
+        print("Yes");
+        final user = firebaseAuth.currentUser;
+        final failureOrProfile =
+            await _repository.getUserProfile(uid: user!.uid);
+        failureOrProfile.fold(
+            (l) => emit(state.copyWith(
+                  getUserProfileLoadingStatus: LoadingStatus.error,
+                )), (r) {
+          print("R is $r");
+          emit(
+            state.copyWith(
+              userProfileModel: r,
+              getUserProfileLoadingStatus: LoadingStatus.loaded,
+              getCurrentUserLoadingStatus: LoadingStatus.loaded,
+            ),
+          );
+        });
+      });
+    } else {
+      emit(state.copyWith(
+          getCurrentUserLoadingStatus: LoadingStatus.error,
+          getUserProfileLoadingStatus: LoadingStatus.error));
+    }
   }
 }

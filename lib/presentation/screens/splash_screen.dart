@@ -1,5 +1,6 @@
 import 'package:business_mates/presentation/screens/payments/payment_screen.dart';
 
+import '../cubits/manage_categories/manage_categories_cubit.dart';
 import 'authentication/login_screen.dart';
 import 'authentication/verify_otp_screen.dart';
 import 'introduction_animation/introduction_animation_screen.dart';
@@ -21,23 +22,15 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    context.read<AuthCubit>().checkIsAppFirstTime();
-    context.read<AuthCubit>().getCurrentUser();
-    if (context.read<AuthCubit>().state.currentLoggedInUser != null) {
-      context.read<AuthCubit>().getUserProfile(
-          uid: context.read<AuthCubit>().state.currentLoggedInUser!.uid);
-    }
-
     super.initState();
+    checkData();
   }
 
-  @override
-  void didChangeDependencies() {
-    if (context.watch<AuthCubit>().state.currentLoggedInUser != null) {
-      context.watch<AuthCubit>().getUserProfile(
-          uid: context.watch<AuthCubit>().state.currentLoggedInUser!.uid);
-    }
-    super.didChangeDependencies();
+  void checkData() async {
+    final AuthCubit authCubit = context.read<AuthCubit>();
+    await authCubit.checkIsAppFirstTime();
+
+    await authCubit.getUserProfile();
   }
 
   @override
@@ -45,7 +38,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return FlowBuilder<AuthState>(
       state: context.watch<AuthCubit>().state,
       onGeneratePages: (authState, pages) {
-        if (authState.isAppFirstTimeChecking) {
+        print(authState);
+        if (authState.isAppFirstTimeChecking ||
+            authState.isInProgress == true ||
+            authState.getCurrentUserLoadingStatus == LoadingStatus.loading ||
+            authState.getUserProfileLoadingStatus == LoadingStatus.loading) {
           return [
             const MaterialPage(
               child: Scaffold(

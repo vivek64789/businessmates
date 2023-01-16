@@ -316,7 +316,7 @@ class RepositoryImpl implements Repository {
   Future<Either<AuthFailure, void>> sendResetPasswordLink(
       {required String email}) async {
     if (await networkInfo.isConnected) {
-      return remoteDataSource.sendResetPasswordLink(email: email );
+      return remoteDataSource.sendResetPasswordLink(email: email);
     } else {
       return left(const AuthFailure.noInternetConnection());
     }

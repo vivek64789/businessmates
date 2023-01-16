@@ -303,6 +303,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       if (doc.exists) {
         final data = doc.data();
         userData = UserProfileModel.fromJson(data!);
+        print("userdata = $userData");
         // caching the user each time.
         return right(userData);
       } else {

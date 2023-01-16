@@ -3,6 +3,11 @@ class Constants {
   static const String appVersion = "1.0.0";
   static const String appBuildNumber = "1";
   static const String logo = "assets/images/logo.jpg";
+  static const String facebookIcon = "assets/icons/facebook.svg";
+  static const String tiktokIcon = "assets/icons/tiktok.svg";
+  static const String instagramIcon = "assets/icons/instagram.svg";
+  static const String linkedinIcon = "assets/icons/linkedin.svg";
+  static const String websiteIcon = "assets/icons/website.png";
   static const int ANIMATED_BODY_MS = 500;
 
 // button
@@ -39,4 +44,16 @@ class Constants {
 
   static const placeholderImage =
       "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png";
+
+// website
+  static const String websiteUrl = "https://autismmates.org.au/";
+
+  static const String facebookUrl =
+      "https://www.facebook.com/groups/AutismMATES/?_ga=2.45954080.507532568.1673814744-261998874.1673814744";
+  static const String instagramUrl =
+      "https://instagram.com/autism_mates?igshid=Zjc2ZTc4Nzk=";
+  static const String linkedinUrl =
+      "https://au.linkedin.com/in/randahabelrih?_ga=2.45954080.507532568.1673814744-261998874.1673814744";
+  static const String tiktokUrl =
+      "https://www.tiktok.com/@autismmates?_t=8Z3onPxjGt8&_r=1";
 }

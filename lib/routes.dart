@@ -6,6 +6,7 @@ import 'package:business_mates/presentation/screens/authentication/register_scre
 import 'package:business_mates/presentation/screens/authentication/verify_otp_screen.dart';
 import 'package:business_mates/presentation/screens/category/single_categories_screen.dart';
 import 'package:business_mates/presentation/screens/course/read_course_content_screen.dart';
+import 'package:business_mates/presentation/screens/homepage/about_us_screen.dart';
 import 'package:business_mates/presentation/screens/homepage/home_screen.dart';
 import 'package:business_mates/presentation/screens/homepage/profile_screen.dart';
 import 'package:business_mates/presentation/screens/homepage/update_profile_screen.dart';
@@ -100,6 +101,11 @@ import 'presentation/screens/homepage/course_info_screen.dart';
       page: ForgotPasswordScreen,
       name: "ForgotPasswordScreenRoute",
       path: ForgotPasswordScreen.routeName,
+    ),
+    AutoRoute(
+      page: AboutUsScreen,
+      name: "AboutUsScreenRoute",
+      path: AboutUsScreen.routeName,
     ),
     AutoRoute(page: SplashScreen, initial: true),
   ],

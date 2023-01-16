@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:business_mates/presentation/cubits/manage_profile/manage_profile_cubit.dart';
 import '../../cubits/auth/auth_cubit.dart';
 import 'register_screen.dart';
 import '../../widgets/bm_button.dart';
@@ -107,47 +106,49 @@ class VerifyOTPScreen extends StatelessWidget {
             const SizedBox(
               height: 50,
             ),
-            BlocBuilder<AuthCubit, AuthState>(
-              builder: (context, state) {
-                return BMButton(
-                    isLoading: state.isInProgress,
-                    onPressed: () async {
-                      final user =
-                          await context.read<AuthCubit>().getCurrentUser();
+            // BlocBuilder<AuthCubit, AuthState>(
+            //   builder: (context, state) {
+            //     return BMButton(
+            //         isLoading: state.isInProgress,
+            //         onPressed: () async {
+            //           // final user =
+            //           //     await context.read<AuthCubit>().getCurrentUser();
 
-                      if (user!.emailVerified) {
-                        context
-                            .read<ManageProfileCubit>()
-                            .getUserProfile(uid: user.uid);
-                        final bool isSubscribed = context
-                            .read<ManageProfileCubit>()
-                            .state
-                            .userProfileModel
-                            .isSubscribed;
-                        print(isSubscribed);
-                        isSubscribed
-                            ? context.router.replaceAll(
-                                [RootDashboardRoute(currentIndex: 0)])
-                            : context.router
-                                .replaceAll([const PaymentScreenRoute()]);
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: const Text(
-                              'Please Verify Your Email Address',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primary,
-                          ),
-                        );
-                      }
-                    },
-                    text: "Check Verification");
-              },
-            ),
+            //           // if (user!.emailVerified) {
+            //           //   context
+            //           //       .read<ManageProfileCubit>()
+            //           //       .getUserProfile(uid: user.uid);
+            //           //   final bool isSubscribed = context
+            //           //       .read<ManageProfileCubit>()
+            //           //       .state
+            //           //       .userProfileModel
+            //           //       .isSubscribed;
+            //           //   print(isSubscribed);
+            //           //   isSubscribed
+            //           //       ? context.router.replaceAll(
+            //           //           [RootDashboardRoute(currentIndex: 0)])
+            //           //       : context.router
+            //           //           .replaceAll([const PaymentScreenRoute()]);
+            //           // } else {
+            //           //   ScaffoldMessenger.of(context).showSnackBar(
+            //           //     SnackBar(
+            //           //       content: const Text(
+            //           //         'Please Verify Your Email Address',
+            //           //         style: TextStyle(
+            //           //           color: Colors.white,
+            //           //         ),
+            //           //       ),
+            //           //       backgroundColor:
+            //           //           Theme.of(context).colorScheme.primary,
+            //           //     ),
+            //           //   );
+            //           // }
+            //           context.router.pop();
+            //           context.router.push(const SplashScreenRoute());
+            //         },
+            //         text: "Check Verification");
+            //   },
+            // ),
             // resend otp
             const SizedBox(
               height: 20,

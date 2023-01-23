@@ -1,5 +1,5 @@
 class Constants {
-  static const String appName = "Flutter Demo";
+  static const String appName = "Business Mates";
   static const String appVersion = "1.0.0";
   static const String appBuildNumber = "1";
   static const String logo = "assets/images/logo.jpg";

@@ -50,22 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBrIB80kVJwNojDRU9rq4zP_GOFFXV6M_w',
-    appId: '1:68614719530:android:4f369af6bde6e5b7781b53',
-    messagingSenderId: '68614719530',
-    projectId: 'arduinoproject1-10e0b',
-    databaseURL: 'https://arduinoproject1-10e0b-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'arduinoproject1-10e0b.appspot.com',
+    apiKey: 'AIzaSyDnom8iFcvuEAROpIj1Rw9QkFiv4o28CBY',
+    appId: '1:829041914131:android:ebe4ff7a921702c4b26ae6',
+    messagingSenderId: '829041914131',
+    projectId: 'businessmates-bbc29',
+    storageBucket: 'businessmates-bbc29.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBBNcgPhjZTaye0NX0gfR9phfAJyacW2z4',
-    appId: '1:68614719530:ios:1cff4903f4d11656781b53',
-    messagingSenderId: '68614719530',
-    projectId: 'arduinoproject1-10e0b',
-    databaseURL: 'https://arduinoproject1-10e0b-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'arduinoproject1-10e0b.appspot.com',
-    iosClientId: '68614719530-1va4i9dcek7iq31ebqft36hjfmgssf7n.apps.googleusercontent.com',
-    iosBundleId: 'com.example.businessmatesAdmin',
+    apiKey: 'AIzaSyDXRGkmIMD9BYRd8jT78icxtDbq_cOJ_ls',
+    appId: '1:829041914131:ios:de26d44959776fd7b26ae6',
+    messagingSenderId: '829041914131',
+    projectId: 'businessmates-bbc29',
+    storageBucket: 'businessmates-bbc29.appspot.com',
+    androidClientId: '829041914131-f9b4v0pcloo5jtdq8hvfafbm6sar3k1u.apps.googleusercontent.com',
+    iosClientId: '829041914131-rhvc57j4ka8nq460se8gasu5nsgrr1rf.apps.googleusercontent.com',
+    iosBundleId: 'com.example.businessMates',
   );
 }

@@ -318,7 +318,10 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  LogoWidget(height: MediaQuery.of(context).size.height * 0.06),
+                  LogoWidget(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    showTitle: false,
+                  ),
                   const Text(
                     "Business Mates",
                   ),

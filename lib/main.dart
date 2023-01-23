@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
               ],
               child: MaterialApp.router(
                 debugShowCheckedModeBanner: false,
-                title: 'Business Mate',
+                title: 'Business Mates',
                 theme: lightTheme(),
                 routeInformationParser: appRouter.defaultRouteParser(),
                 routerDelegate: appRouter.delegate(),

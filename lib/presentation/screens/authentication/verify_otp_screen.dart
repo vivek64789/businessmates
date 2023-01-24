@@ -82,11 +82,11 @@ class VerifyOTPScreen extends StatelessWidget {
               margin: const EdgeInsets.symmetric(
                   horizontal: Constants.formFieldMarginHorizontal),
               child: Column(
-                children: const [
+                children: [
                   // email has been sent to your email please check
                   Text(
-                    'Email has been sent to your email please check and verify',
-                    style: TextStyle(
+                    'Email has been sent to ${authCubit.state.currentLoggedInUser!.email}. \n Please check and verify',
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 15,
                     ),
